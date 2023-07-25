@@ -1,7 +1,6 @@
 // Import dependencies.
 import { merge } from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
 // Import Configuration.
 import {
@@ -22,7 +21,6 @@ const WebpackConfig = {
   optimization: {
     minimize: true,
     minimizer: [
-      new CssMinimizerPlugin(),
       new TerserPlugin(),
       imageMinimizerWebpackPlugin,
     ],
