@@ -6,7 +6,6 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 // Import Configuration.
 import {
   cleanWebpackPlugin,
-  miniCssExtractPlugin,
   imageMinimizerWebpackPlugin,
 } from './plugins/index.js';
 import { WebpackCommonConfig } from './common.js';
@@ -14,7 +13,7 @@ import { WebpackCommonConfig } from './common.js';
 /**
  * Plugins for production build.
  */
-const plugins = [cleanWebpackPlugin, miniCssExtractPlugin];
+const plugins = [cleanWebpackPlugin];
 
 /**
  * Webpack production configuration.

@@ -4,15 +4,14 @@ import {
   copyWebpackPlugin,
   eSLintWebpackPlugin,
   dotenvWebpackPlugin,
-  styleLintWebpackPlugin,
 } from './plugins/index.js';
 import { paths, config } from '../configuration/index.js';
-import { css, fonts, images, javaScript, typeScript } from './modules/index.js';
+import { fonts, images, javaScript, typeScript } from './modules/index.js';
 
 /**
  * Entry point for the bundle.
  */
-const entry = [`${paths.src}/index.ts`, `${paths.src}/css/styles.css`];
+const entry = [`${paths.src}/index.ts`];
 
 /**
  * Set output file name and path.
@@ -31,14 +30,13 @@ const plugins = [
   copyWebpackPlugin,
   eSLintWebpackPlugin,
   dotenvWebpackPlugin,
-  styleLintWebpackPlugin,
 ];
 
 /**
  * Shared modules.
  */
 const modules = {
-  rules: [css, fonts, images, javaScript, typeScript],
+  rules: [fonts, images, javaScript, typeScript],
 };
 
 /**
