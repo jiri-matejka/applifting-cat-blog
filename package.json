@@ -25,6 +25,7 @@
     "@babel/preset-typescript": "^7.22.5",
     "@babel/register": "^7.22.5",
     "@types/jest": "^29.5.3",
+    "@types/react-dom": "~18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "babel-jest": "^29.6.1",
@@ -72,5 +73,9 @@
     "webpack-dev-server": "^v4.15.1",
     "webpack-merge": "^5.9.0"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "react": "~18.2.0",
+    "react-dom": "~18.2.0"
+  }
 }

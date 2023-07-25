@@ -11,7 +11,7 @@ import { fonts, images, javaScript, typeScript } from './modules/index.js';
 /**
  * Entry point for the bundle.
  */
-const entry = [`${paths.src}/index.ts`];
+const entry = [`${paths.src}/index.tsx`];
 
 /**
  * Set output file name and path.
