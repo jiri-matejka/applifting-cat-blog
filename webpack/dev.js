@@ -11,6 +11,11 @@ import { paths, config } from '../configuration/index.js';
 const devServer = {
   client: {
     progress: true,
+    overlay: {
+      warnings: false,
+      errors: true,
+      runtimeErrors: true,
+    },
   },
   compress: false,
   host: config.HOST,
