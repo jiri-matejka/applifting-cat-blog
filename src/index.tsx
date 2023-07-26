@@ -1,12 +1,20 @@
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { App } from './App';
 
-// Clear the existing HTML content
 document.body.innerHTML = '<div id="app"></div>';
 
 const appDiv = document.getElementById('app');
 if (appDiv) {
   const root = createRoot(appDiv);
-  root.render(<h1>Hello, world</h1>);
+  root.render(
+    <StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </StrictMode>,
+  );
 } else {
   throw new Error('app element not found');
 }

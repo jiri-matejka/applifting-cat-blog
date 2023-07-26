@@ -20,10 +20,7 @@ const plugins = [cleanWebpackPlugin];
 const WebpackConfig = {
   optimization: {
     minimize: true,
-    minimizer: [
-      new TerserPlugin(),
-      imageMinimizerWebpackPlugin,
-    ],
+    minimizer: [new TerserPlugin(), imageMinimizerWebpackPlugin],
   },
   plugins,
 };

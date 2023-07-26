@@ -23,7 +23,6 @@ module.exports = {
   },
   rules: {
     indent: ['error', 2, { SwitchCase: 1 }],
-    quotes: ['error', 'single', 'avoid-escape'],
   },
   overrides: [
     {
@@ -35,7 +34,8 @@ module.exports = {
     {
       files: ['**/*.ts', '**/*.tsx'],
       rules: {
-        '@typescript-eslint/explicit-function-return-type': 'error',
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/no-unused-vars': 1,
       },
     },
     {
