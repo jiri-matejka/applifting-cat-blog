@@ -4,7 +4,7 @@ export type Comment = {
   content: string;
   commentId: string;
   postedAt: Date;
-  score: number;
+  votes: number;
 };
 
 export type Article = {

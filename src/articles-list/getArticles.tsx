@@ -20,7 +20,7 @@ export function getArticles(): Article[] {
           commentId: '1',
           content: 'Very good comment',
           postedAt: new Date(2022, 3, 1, 13, 30, 0),
-          score: 10,
+          votes: 10,
         },
       ],
     },
