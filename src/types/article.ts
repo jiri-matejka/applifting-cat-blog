@@ -13,6 +13,7 @@ export type Article = {
   perex: string;
   imageId: string;
   todo_ImageUrl: string;
+  author: string;
   createdAt: Date;
   lastUpdatedAt: Date;
   content: string;

@@ -13,8 +13,8 @@
     "lint:scripts": "eslint --ignore-path .gitignore **/*.{js,jsx,cjs,json,ts,tsx}",
     "lint:scripts:fix": "yarn lint:scripts --fix",
     "serve": "cross-env NODE_ENV=development webpack serve --config webpack.config.babel.js",
-    "test": "jest",
-    "test:watch": "yarn test --watch"
+    "test": "jest --no-coverage",
+    "test:watch": "yarn test --watch --no-coverage"
   },
   "browserslist": [
     "defaults"
@@ -82,6 +82,7 @@
     "framer-motion": "~10.13.1",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
+    "react-hook-form": "~7.45.2",
     "react-router-dom": "~6.14.2"
   }
 }

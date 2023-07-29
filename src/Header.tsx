@@ -57,7 +57,7 @@ export function Header() {
           <Flex h={16} alignItems="center" justifyContent="space-between">
             <HStack spacing={8} alignItems="center">
               <Box>
-                <Image src="cat.png" height={10} width={10} alt="Logo" />
+                <Image src="/cat.png" height={10} width={10} alt="Logo" />
               </Box>
               <HStack
                 as="nav"

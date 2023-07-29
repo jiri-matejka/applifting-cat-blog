@@ -17,6 +17,7 @@ const devServer = {
       runtimeErrors: true,
     },
   },
+  historyApiFallback: true,
   compress: false,
   host: config.HOST,
   hot: true,
