@@ -1,21 +1,25 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import { App } from './App';
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
+import { Root } from './routing/Root';
 
 document.body.innerHTML = '<div id="app"></div>';
+
+const router = createBrowserRouter(createRoutesFromElements(Root));
 
 const appDiv = document.getElementById('app');
 if (appDiv) {
   const root = createRoot(appDiv);
   root.render(
     <StrictMode>
-      <BrowserRouter>
-        <ChakraProvider>
-          <App />
-        </ChakraProvider>
-      </BrowserRouter>
+      <ChakraProvider>
+        <RouterProvider router={router} />
+      </ChakraProvider>
     </StrictMode>,
   );
 } else {
