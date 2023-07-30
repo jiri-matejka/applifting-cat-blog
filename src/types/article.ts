@@ -19,3 +19,8 @@ export type Article = {
   content: string;
   comments: Comment[];
 };
+
+export type CreateArticleRequest = Omit<
+  Article,
+  'articleId' | 'imageId' | 'comments' | 'todo_ImageUrl' | 'author'
+>;

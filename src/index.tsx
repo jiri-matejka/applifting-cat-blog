@@ -7,6 +7,10 @@ import {
 } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Root } from './routing/Root';
+import { theme } from './theme/theme';
+import { configureAxiosHooks } from './api/axiosConfig';
+
+configureAxiosHooks();
 
 document.body.innerHTML = '<div id="app"></div>';
 
@@ -17,7 +21,7 @@ if (appDiv) {
   const root = createRoot(appDiv);
   root.render(
     <StrictMode>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <RouterProvider router={router} />
       </ChakraProvider>
     </StrictMode>,

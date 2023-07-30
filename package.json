@@ -80,6 +80,8 @@
     "@emotion/react": "~11.11.1",
     "@emotion/styled": "~11.11.0",
     "@tanstack/react-table": "~8.9.3",
+    "axios": "~1.4.0",
+    "axios-hooks": "~4.0.0",
     "chakra-ui-markdown-renderer": "~4.1.0",
     "framer-motion": "~10.13.1",
     "react": "~18.2.0",
