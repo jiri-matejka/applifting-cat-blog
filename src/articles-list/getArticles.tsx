@@ -24,5 +24,18 @@ export function getArticles(): Article[] {
         },
       ],
     },
+    {
+      articleId: '11',
+      content: 'LOREM PISUM',
+      createdAt: new Date(2023, 7, 22),
+      imageId: '2',
+      author: 'Jiri Matejka',
+      todo_ImageUrl:
+        'https://i.pinimg.com/originals/7b/c3/17/7bc31709442b6e0eacfd325b0b96429b.jpg',
+      lastUpdatedAt: new Date(2022, 3, 1),
+      title: 'How to feed your cat',
+      perex: 'We will show you how to feed your cat',
+      comments: [],
+    },
   ];
 }
