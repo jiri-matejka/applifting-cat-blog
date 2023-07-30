@@ -1,15 +1,21 @@
-import { Text, Heading, Button, Flex, Box } from '@chakra-ui/react';
 import { ArticleTable } from './ArticleTable';
+import { HeadingWithChildren } from '../HeadingWithButton';
+import { Button, Link } from '@chakra-ui/react';
+import { getCreateArticleRoute, getLoginRoute } from '@/routing/routes';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 export function MyArticlesPage() {
   return (
     <>
-      <Heading as="h1" pb="4" alignItems="start" display="flex" gap={6}>
-        My articles
-        <Button size="sm" colorScheme="blue" mt={1}>
-          Create new article
+      <HeadingWithChildren headingText="My articles">
+        <Button
+          colorScheme="blue"
+          as={ReactRouterLink}
+          to={getCreateArticleRoute()}
+        >
+          Create article
         </Button>
-      </Heading>
+      </HeadingWithChildren>
       <ArticleTable />
     </>
   );

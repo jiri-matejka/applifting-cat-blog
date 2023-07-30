@@ -26,15 +26,7 @@ export function LoginPage() {
             <Input type="password" />
           </FormControl>
           <Stack spacing={10}>
-            <Button
-              bg={'blue.400'}
-              color={'white'}
-              _hover={{
-                bg: 'blue.500',
-              }}
-            >
-              Log in
-            </Button>
+            <Button colorScheme="blue">Log in</Button>
           </Stack>
         </Stack>
       </Box>

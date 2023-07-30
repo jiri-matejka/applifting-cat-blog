@@ -2,6 +2,7 @@ import { Text, HStack, VStack } from '@chakra-ui/react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Input, Button } from '@chakra-ui/react';
 import { CommentWrapperWithImage } from './CommentWrapperWithImage';
+import { RequiredValidationError } from '@/utils/ValidationError';
 
 export type AddCommentData = {
   comment: string;
@@ -23,9 +24,7 @@ export function JoinDiscussion() {
               {...register('comment', { required: true })}
               placeholder="Add your comment"
             />
-            {formState.errors.comment && (
-              <Text color="red.600">This field is required</Text>
-            )}
+            {formState.errors.comment && <RequiredValidationError />}
           </VStack>
           <Button type="submit">Send</Button>
         </HStack>

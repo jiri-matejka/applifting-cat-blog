@@ -5,3 +5,7 @@ export function getLoginRoute() {
 export function getArticleDetailRoute(id: string) {
   return `/article/${id}`;
 }
+
+export function getCreateArticleRoute() {
+  return '/backoffice/add-article';
+}

@@ -1,6 +1,7 @@
 import { Home } from '@/Home';
 import { Layout } from '@/Layout';
 import { ArticleDetailPage } from '@/article-detail/ArticleDetail';
+import { CreateArticlePage } from '@/backoffice/edit-article/CreateArticlePage';
 import { MyArticlesPage } from '@/backoffice/my-articles/MyArticlesPage';
 import { LoginPage } from '@/login/LoginPage';
 import { Route } from 'react-router-dom';
@@ -12,6 +13,7 @@ export const Root = (
       <Route index element={<Home />} />
       <Route path="login" element={<LoginPage />} />
       <Route path="backoffice/my-articles" element={<MyArticlesPage />} />
+      <Route path="backoffice/add-article" element={<CreateArticlePage />} />
     </Route>
   </>
 );

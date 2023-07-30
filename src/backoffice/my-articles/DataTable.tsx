@@ -50,7 +50,7 @@ export function DataTable<Data extends object>({
                       header.getContext(),
                     )}
                     {header.column.getCanSort() && (
-                      <Flex pl="4">
+                      <Flex pl="4" cursor="pointer">
                         <TriangleDownIcon
                           aria-label="sorted descending"
                           color={getTriangleColor(
