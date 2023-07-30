@@ -80,10 +80,12 @@
     "@emotion/react": "~11.11.1",
     "@emotion/styled": "~11.11.0",
     "@tanstack/react-table": "~8.9.3",
+    "chakra-ui-markdown-renderer": "~4.1.0",
     "framer-motion": "~10.13.1",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
     "react-hook-form": "~7.45.2",
+    "react-markdown": "~8.0.7",
     "react-router-dom": "~6.14.2"
   }
 }

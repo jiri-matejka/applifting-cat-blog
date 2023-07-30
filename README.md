@@ -6,3 +6,7 @@ Server side rendering
 SEO optimization
 
 Related articles:
+
+TODO:
+lazy load components in router
+https://stackoverflow.com/questions/73984257/how-to-use-suspense-with-routerprovider-in-react-router-dom-v6-4

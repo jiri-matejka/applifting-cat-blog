@@ -3,6 +3,8 @@ import { type Article } from '../types/article';
 import { getArticles } from '@/articles-list/getArticles';
 import { useParams } from 'react-router-dom';
 import { Comments } from './Comments';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 
 type ArticleBodyProps = Pick<
   Article,
@@ -45,7 +47,9 @@ function ArticleBody({
         </Text>
         <Image src={todo_ImageUrl} alt={title} mb={4} objectFit="cover" />
         <Box mt={4}>
-          <Text>{content}</Text>
+          <ReactMarkdown components={ChakraUIRenderer()} skipHtml>
+            {content}
+          </ReactMarkdown>
         </Box>
         <Divider mt={4} mb={4} />
         <Comments comments={comments} />

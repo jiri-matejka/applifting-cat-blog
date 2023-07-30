@@ -4,7 +4,7 @@ export function getArticles(): Article[] {
   return [
     {
       articleId: '10',
-      content: 'this is very big content',
+      content: 'This is some text with **bold**',
       createdAt: new Date(2022, 0, 1),
       imageId: '1',
       author: 'Jiri Matejka',
