@@ -13,3 +13,7 @@ export function getCreateArticleRoute() {
 export function getRecentArticlesRoute() {
   return '/';
 }
+
+export function getMyArticlesRoute() {
+  return '/backoffice/my-articles';
+}

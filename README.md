@@ -24,3 +24,4 @@ Missing:
 images
 i18n
 caching
+storing JWT in a cookie
