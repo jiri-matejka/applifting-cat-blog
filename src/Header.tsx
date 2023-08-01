@@ -18,17 +18,19 @@ import {
 } from '@chakra-ui/react';
 import { useAuthentication } from './hooks/useAuthentication';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { getLoginRoute } from './routing/routes';
+import { getLoginRoute, getRecentArticlesRoute } from './routing/routes';
 
 type Props = {
+  href: string;
   children: React.ReactNode;
 };
 
-const Links = ['Recent articles', 'About'];
+const Links = [
+  { text: 'Recent articles', link: getRecentArticlesRoute() },
+  { text: 'About', link: '#' },
+];
 
-function NavLink(props: Props) {
-  const { children } = props;
-
+function NavLink({ children, href }: Props) {
   return (
     <Box
       as="a"
@@ -39,7 +41,7 @@ function NavLink(props: Props) {
         textDecoration: 'none',
         bg: useColorModeValue('gray.200', 'gray.700'),
       }}
-      href={'#'}
+      href={href}
     >
       {children}
     </Box>
@@ -65,7 +67,9 @@ export function Header() {
                 display={{ base: 'none', md: 'flex' }}
               >
                 {Links.map((link) => (
-                  <NavLink key={link}>{link}</NavLink>
+                  <NavLink href={link.link} key={link.text}>
+                    {link.text}
+                  </NavLink>
                 ))}
               </HStack>
             </HStack>
@@ -104,9 +108,9 @@ export function Header() {
           {isOpen ? (
             <Box pb={4} display={{ md: 'none' }}>
               <Stack as="nav" spacing={4}>
-                {Links.map((link) => (
+                {/* {Links.map((link) => (
                   <NavLink key={link}>{link}</NavLink>
-                ))}
+                ))} */}
               </Stack>
             </Box>
           ) : null}

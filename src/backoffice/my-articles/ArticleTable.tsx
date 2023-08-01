@@ -1,13 +1,13 @@
 import { Button, Flex } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { createColumnHelper } from '@tanstack/react-table';
-import type { Article } from '@/types/article';
+import type { Article, FullArticle } from '@/types/article';
 import { getArticles } from '@/articles-list/getArticles';
 import { DataTable } from './DataTable';
 
 type MyArticlesTableType = Pick<
-  Article,
-  'articleId' | 'title' | 'perex' | 'author'
+  FullArticle,
+  'articleId' | 'title' | 'perex'
 > & {
   commentsCount: number;
 };

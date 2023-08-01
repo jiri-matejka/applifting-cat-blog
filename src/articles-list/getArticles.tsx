@@ -1,15 +1,15 @@
-import type { Article } from '../types/article';
+import type { Article, FullArticle } from '../types/article';
 
-export function getArticles(): Article[] {
+export function getArticles(): FullArticle[] {
   return [
     {
       articleId: '10',
       content: 'This is some text with **bold**',
       createdAt: new Date(2022, 0, 1),
       imageId: '1',
-      author: 'Jiri Matejka',
-      todo_ImageUrl:
-        'https://i.pinimg.com/originals/7b/c3/17/7bc31709442b6e0eacfd325b0b96429b.jpg',
+      //author: 'Jiri Matejka',
+      // todo_ImageUrl:
+      //   'https://i.pinimg.com/originals/7b/c3/17/7bc31709442b6e0eacfd325b0b96429b.jpg',
       lastUpdatedAt: new Date(2022, 3, 1),
       title: 'Very nice article',
       perex: 'Very important',
@@ -29,9 +29,9 @@ export function getArticles(): Article[] {
       content: 'LOREM PISUM',
       createdAt: new Date(2023, 7, 22),
       imageId: '2',
-      author: 'Jiri Matejka',
-      todo_ImageUrl:
-        'https://i.pinimg.com/originals/7b/c3/17/7bc31709442b6e0eacfd325b0b96429b.jpg',
+      //author: 'Jiri Matejka',
+      // todo_ImageUrl:
+      //   'https://i.pinimg.com/originals/7b/c3/17/7bc31709442b6e0eacfd325b0b96429b.jpg',
       lastUpdatedAt: new Date(2022, 3, 1),
       title: 'How to feed your cat',
       perex: 'We will show you how to feed your cat',

@@ -2,7 +2,7 @@ import { Text, HStack, VStack } from '@chakra-ui/react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Input, Button } from '@chakra-ui/react';
 import { CommentWrapperWithImage } from './CommentWrapperWithImage';
-import { RequiredValidationError } from '@/utils/ValidationError';
+import { RequiredValidationError } from '@/common/ValidationError';
 
 export type AddCommentData = {
   comment: string;

@@ -1,4 +1,4 @@
-import { RequiredValidationError } from '@/utils/ValidationError';
+import { RequiredValidationError } from '@/common/ValidationError';
 import {
   Box,
   FormControl,
@@ -6,10 +6,13 @@ import {
   Input,
   Textarea,
   Button,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm, Controller } from 'react-hook-form';
 import useAxios from 'axios-hooks';
 import type { Article, CreateArticleRequest } from '@/types/article';
+import { publicApi } from '@/api/axiosConfig';
+import { API_KEY } from '@/api/constants';
 
 type ArticleFormData = {
   title: string;
@@ -17,50 +20,56 @@ type ArticleFormData = {
   content: string;
 };
 
-export function CreateEditArticle({
+export function ArticleForm({
   mode,
   formId,
 }: {
   mode: 'create' | 'edit';
   formId: string;
 }) {
+  const toast = useToast();
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<ArticleFormData>();
 
-  const [{ data, loading, error }, executePost] = useAxios<
-    unknown,
-    CreateArticleRequest
-  >(
-    {
-      url: '/articles',
-      method: 'POST',
-      headers: {
-        'X-API-KEY': '6398f131-36e5-4ed8-be62-c46cb6feedef',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer 723da993-2e4b-48e4-9eb2-c37620ada461',
-      },
-    },
-    { manual: true, useCache: false },
-  );
-
   const onSubmit = (data: ArticleFormData) => {
-    executePost({
-      data: {
-        ...data,
-        createdAt: new Date(),
-        lastUpdatedAt: new Date(),
-      },
-    }).then(
-      (value) => {
-        console.log('SUCCESS', value);
-      },
-      (error) => {
-        console.error(error);
-      },
-    );
+    publicApi
+      .post<CreateArticleRequest>(
+        '/articles',
+        {
+          ...data,
+          createdAt: new Date().toISOString(),
+          lastUpdatedAt: new Date().toISOString(),
+        },
+        {
+          method: 'POST',
+          headers: {
+            'X-API-KEY': API_KEY,
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer 723da993-2e4b-48e4-9eb2-c37620ada461',
+          },
+        },
+      )
+      .then(
+        () => {
+          toast({
+            title: 'Article was created',
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+        (error) => {
+          toast({
+            title: 'Error occured while creating article',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+      );
   };
 
   return (

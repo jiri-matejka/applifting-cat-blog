@@ -12,15 +12,27 @@ export type Article = {
   title: string;
   perex: string;
   imageId: string;
-  todo_ImageUrl: string;
-  author: string;
   createdAt: Date;
   lastUpdatedAt: Date;
-  content: string;
+};
+
+export type FullArticle = Article & {
   comments: Comment[];
+  content: string;
 };
 
 export type CreateArticleRequest = Omit<
   Article,
-  'articleId' | 'imageId' | 'comments' | 'todo_ImageUrl' | 'author'
->;
+  'articleId' | 'imageId' | 'comments' | 'createdAt' | 'lastUpdatedAt'
+> & {
+  createdAt: string;
+  lastUpdatedAt: string;
+};
+
+export type ArticleDetailResponse = Omit<
+  FullArticle,
+  'createdAt' | 'lastUpdatedAt'
+> & {
+  createdAt: string;
+  lastUpdatedAt: string;
+};

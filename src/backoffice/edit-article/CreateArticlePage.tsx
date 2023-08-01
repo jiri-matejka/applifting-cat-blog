@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import { HeadingWithChildren } from '../HeadingWithButton';
-import { CreateEditArticle } from './CreateEditArticle';
+import { ArticleForm } from './ArticleForm';
 
 export function CreateArticlePage() {
   const formId = 'create-article-form';
@@ -12,7 +12,7 @@ export function CreateArticlePage() {
           Publish
         </Button>
       </HeadingWithChildren>
-      <CreateEditArticle mode="create" formId={formId} />
+      <ArticleForm mode="create" formId={formId} />
     </>
   );
 }

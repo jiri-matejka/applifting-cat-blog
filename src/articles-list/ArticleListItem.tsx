@@ -5,18 +5,14 @@ import { getArticleDetailRoute } from '@/routing/routes';
 
 type ArticleItemProps = Pick<
   Article,
-  'articleId' | 'todo_ImageUrl' | 'title' | 'perex' | 'lastUpdatedAt'
-> & {
-  commentsCount: number;
-};
+  'articleId' | 'title' | 'perex' | 'lastUpdatedAt'
+>;
 
 export function ArticleListItem({
   articleId,
   perex,
   title,
-  todo_ImageUrl,
   lastUpdatedAt,
-  commentsCount,
 }: ArticleItemProps) {
   return (
     <Link
@@ -25,7 +21,7 @@ export function ArticleListItem({
       _hover={{ textDecor: 'none' }}
     >
       <Flex>
-        <Image src={todo_ImageUrl} alt={title} boxSize="100px" mr={4} />
+        {/* <Image src={todo_ImageUrl} alt={title} boxSize="100px" mr={4} /> */}
         <Box>
           <Heading as="h3" size="md" mb={2}>
             {title}

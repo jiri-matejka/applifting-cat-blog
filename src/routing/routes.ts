@@ -9,3 +9,7 @@ export function getArticleDetailRoute(id: string) {
 export function getCreateArticleRoute() {
   return '/backoffice/add-article';
 }
+
+export function getRecentArticlesRoute() {
+  return '/';
+}

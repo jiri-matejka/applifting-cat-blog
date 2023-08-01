@@ -21,9 +21,6 @@ module.exports = {
       jsx: true,
     },
   },
-  rules: {
-    indent: ['error', 2, { SwitchCase: 1 }],
-  },
   overrides: [
     {
       files: ['**/*.json'],
