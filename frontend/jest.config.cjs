@@ -12,7 +12,7 @@ module.exports = {
     ],
   },
   testMatch: ['<rootDir>/src/**/*.spec.{js,jsx,ts,tsx}'],
-  collectCoverage: true,
+  collectCoverage: false,
   coverageDirectory: './coverage',
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
