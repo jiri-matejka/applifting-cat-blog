@@ -34,3 +34,8 @@ export class Article {
   @ManyToOne(() => User)
   author!: User;
 }
+
+export type ArticleForCreation = Pick<
+  Article,
+  'title' | 'perex' | 'content' | 'authorUsername'
+>;

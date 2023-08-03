@@ -19,12 +19,15 @@ export function createArticlesRouter() {
     validate(['content', isNonEmptyString]),
     verifyAndParseAuthCookie,
     async (req, res) => {
-      await createArticle(res.locals.authorizedUsername as string, {
-        title: req.body.title as string,
-        perex: req.body.perex as string,
-        content: req.body.content as string,
-      });
-      res.sendStatus(201);
+      const created = await createArticle(
+        res.locals.authorizedUsername as string,
+        {
+          title: req.body.title as string,
+          perex: req.body.perex as string,
+          content: req.body.content as string,
+        },
+      );
+      res.sendStatus(created ? 201 : 400);
     },
   );
 
