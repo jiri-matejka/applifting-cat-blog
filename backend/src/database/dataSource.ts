@@ -1,4 +1,5 @@
 import { Article } from '@src/entities/article';
+import { User } from '@src/entities/user';
 import { DataSource } from 'typeorm';
 
 export const dbDataSource = new DataSource({
@@ -8,7 +9,7 @@ export const dbDataSource = new DataSource({
   username: 'postgres',
   password: 'postgres',
   database: 'postgres',
-  entities: [Article],
+  entities: [Article, User],
   logging: true,
   logger: 'simple-console',
   synchronize: true,

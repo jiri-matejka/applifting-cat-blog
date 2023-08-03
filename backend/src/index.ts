@@ -4,12 +4,14 @@ import { loadEnv } from './loadEnv';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import express from 'express';
+import express, { Router } from 'express';
 import logger from 'jet-logger';
 
 import 'express-async-errors';
 import { initializeDataSource } from './database/dataSource';
 import { createArticlesRouter } from './routers/articles';
+import { seedUsers } from './database/seedUsers';
+import { createAuthRouter } from './routers/auth';
 
 loadEnv();
 const envVariables = getEnvVariables();
@@ -30,9 +32,12 @@ if (envVariables.nodeEnv === 'production') {
 }
 
 app.use('/articles', createArticlesRouter());
+app.use('/auth', createAuthRouter());
 
-initializeDataSource().then(() => {
-  app.listen(envVariables.port, () =>
-    logger.info(`Server ready at http://localhost:${envVariables.port}`),
-  );
-});
+initializeDataSource()
+  .then(seedUsers)
+  .then(() => {
+    app.listen(envVariables.port, () =>
+      logger.info(`Server ready at http://localhost:${envVariables.port}`),
+    );
+  });

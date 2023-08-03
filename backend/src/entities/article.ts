@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+import { User } from './user';
 
 @Entity()
 export class Article {
@@ -20,12 +22,15 @@ export class Article {
   @Column()
   content!: string;
 
-  @Column()
-  votes!: number;
-
   @CreateDateColumn()
   postedAt!: Date;
 
   @UpdateDateColumn()
   lastUpdatedAt!: Date;
+
+  @Column()
+  authorUsername!: string;
+
+  @ManyToOne(() => User)
+  author!: User;
 }
