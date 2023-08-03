@@ -23,3 +23,14 @@ export const createArticle = async (
 
   return true;
 };
+
+export const getArticles = async () => {
+  const articleRepo = dbDataSource.getRepository(Article);
+
+  return await articleRepo
+    .createQueryBuilder()
+    .select('article')
+    .from(Article, 'article')
+    .innerJoinAndSelect('article.author', 'author')
+    .getMany();
+};
