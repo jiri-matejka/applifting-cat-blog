@@ -3,34 +3,28 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
 import { User } from './user';
+import { Article } from './article';
 
 @Entity()
-export class Article {
+export class Comment {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
-  title!: string;
+  text!: string;
 
-  @Column()
-  perex!: string;
+  @ManyToOne(() => Article)
+  article!: Article;
 
-  @Column()
-  content!: string;
+  @Column({ default: 0 })
+  votes!: number;
+
+  @ManyToOne(() => User)
+  author!: User | undefined;
 
   @CreateDateColumn()
   postedAt!: Date;
-
-  @UpdateDateColumn()
-  lastUpdatedAt!: Date;
-
-  @Column()
-  authorUsername!: string;
-
-  @ManyToOne(() => User)
-  author!: User;
 }
