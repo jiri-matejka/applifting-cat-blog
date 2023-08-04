@@ -2,6 +2,7 @@ import { Article } from '@src/entities/article';
 import { User } from '@src/entities/user';
 import { DataSource } from 'typeorm';
 import { Comment } from '@src/entities/comment';
+import { CommentVote } from '@src/entities/commentVote';
 
 export const dbDataSource = new DataSource({
   type: 'postgres',
@@ -10,7 +11,7 @@ export const dbDataSource = new DataSource({
   username: 'postgres',
   password: 'postgres',
   database: 'postgres',
-  entities: [Article, User, Comment],
+  entities: [Article, User, Comment, CommentVote],
   logging: true,
   logger: 'simple-console',
   synchronize: true,

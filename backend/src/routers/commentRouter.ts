@@ -35,7 +35,7 @@ export function createCommentsRouter() {
     '/:id/upvote',
     validate(['id', isUuid, 'params']),
     async (req, res) => {
-      const result = await changeCommentVote(req.params['id'], '', 1);
+      const result = await changeCommentVote(req.params['id'], req.ip, 1);
       sendResultToResponse(result, res, STATUS_CODES.CREATED);
     },
   );
@@ -44,7 +44,7 @@ export function createCommentsRouter() {
     '/:id/downvote',
     validate(['id', isUuid, 'params']),
     async (req, res) => {
-      const result = await changeCommentVote(req.params['id'], '', -1);
+      const result = await changeCommentVote(req.params['id'], req.ip, -1);
       sendResultToResponse(result, res, STATUS_CODES.CREATED);
     },
   );

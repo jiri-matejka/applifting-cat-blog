@@ -1,3 +1,7 @@
+type ValueOf<T> = T[keyof T];
+
+export type statusCodeType = ValueOf<typeof STATUS_CODES>;
+
 export const STATUS_CODES = {
   CONTINUE: 100,
   SWITCHING_PROTOCOLS: 101,
@@ -60,4 +64,4 @@ export const STATUS_CODES = {
   LOOP_DETECTED: 508,
   NOT_EXTENDED: 510,
   NETWORK_AUTHENTICATION_REQUIRED: 511,
-};
+} as const;
