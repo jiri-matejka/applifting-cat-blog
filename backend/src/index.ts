@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import express, { Router } from 'express';
 import logger from 'jet-logger';
+import cors from 'cors';
 
 import 'express-async-errors';
 import { initializeDataSource } from './database/dataSource';
@@ -19,6 +20,11 @@ const envVariables = getEnvVariables();
 
 const app = express();
 
+const corsOptions = {
+  origin: ['http://localhost:9000'],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(envVariables.cookieProps.secret));
