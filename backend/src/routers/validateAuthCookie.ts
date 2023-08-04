@@ -10,8 +10,9 @@ export const authorizeUserFromCookie: RequestHandler = async (
   res,
   next: NextFunction,
 ) => {
+  const envVars = getEnvVariables();
   const cookie = req.signedCookies[ACCESS_TOKEN_COOKIE_KEY];
-  const result = await validateAuthCookie(cookie);
+  const result = await validateAuthCookie(envVars.jwt.Secret, cookie);
   if (isOk(result)) {
     res.locals.authorizedUsername = result.value;
     next();
@@ -31,8 +32,9 @@ export const optionallyExtractUsernameFromCookie: RequestHandler = async (
   res,
   next: NextFunction,
 ) => {
+  const envVars = getEnvVariables();
   const cookie = req.signedCookies[ACCESS_TOKEN_COOKIE_KEY];
-  const result = await validateAuthCookie(cookie);
+  const result = await validateAuthCookie(envVars.jwt.Secret, cookie);
   if (isOk(result)) {
     res.locals.authorizedUsername = result.value;
     next();
@@ -44,10 +46,9 @@ export const optionallyExtractUsernameFromCookie: RequestHandler = async (
 };
 
 export async function validateAuthCookie(
-  cookie?: string,
+  jwtSecret: string,
+  cookie: string | undefined,
 ): Promise<Result<string>> {
-  const vars = getEnvVariables();
-
   if (!cookie) {
     return error({
       message: 'Missing authorization cookie',
@@ -56,10 +57,10 @@ export async function validateAuthCookie(
   }
 
   return new Promise<Result<string>>((resolve, reject) => {
-    verify(cookie, vars.jwt.Secret, (err, decoded) => {
+    verify(cookie, jwtSecret, (err, decoded) => {
       if (err) {
         console.log('Error while validating JWT', err);
-        reject(
+        resolve(
           error({
             code: STATUS_CODES.UNAUTHORIZED,
             message: 'Missing authorization cookie',
@@ -75,7 +76,7 @@ export async function validateAuthCookie(
           resolve(ok(decoded.username));
         } else {
           console.log('Decoded payload has invalid format', decoded);
-          reject(
+          resolve(
             error({
               code: STATUS_CODES.UNAUTHORIZED,
               message: 'Invalid authorization cookie',
