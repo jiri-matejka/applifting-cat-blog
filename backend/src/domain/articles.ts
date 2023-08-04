@@ -31,15 +31,22 @@ export const createArticle = async (
   return true;
 };
 
-export const getArticlesWithoutComments = async () => {
+export const getArticlesWithoutComments = async (authorUsername?: string) => {
   const articleRepo = dbDataSource.getRepository(Article);
 
-  return await articleRepo
+  const builder = articleRepo
     .createQueryBuilder()
     .select('article')
     .from(Article, 'article')
-    .innerJoinAndSelect('article.author', 'author')
-    .getMany();
+    .innerJoinAndSelect('article.author', 'author');
+
+  if (authorUsername) {
+    builder.where('article.authorUsername = :authorUsername', {
+      authorUsername,
+    });
+  }
+
+  return await builder.getMany();
 };
 
 export const getFullArticle = async (id: string) => {
@@ -51,6 +58,7 @@ export const getFullArticle = async (id: string) => {
     .from(Article, 'article')
     .innerJoinAndSelect('article.author', 'author')
     .leftJoinAndSelect('article.comments', 'comment')
+    .leftJoinAndSelect('comment.author', 'commentAuthor')
     .where('article.id = :id', { id })
     .getOne();
 };

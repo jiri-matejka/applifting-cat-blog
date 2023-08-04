@@ -27,6 +27,20 @@ export function createArticlesRouter() {
     );
   });
 
+  router.get('/my-articles', authorizeUserFromCookie, async (req, res) => {
+    const result = (
+      await getArticlesWithoutComments(res.locals.authorizedUsername)
+    ).map((domainArticle) => ({
+      id: domainArticle.id,
+      title: domainArticle.title,
+      perex: domainArticle.perex,
+      content: domainArticle.content,
+      author: domainArticle.author.name,
+    }));
+
+    res.json(result);
+  });
+
   router.get('/:id', validate(['id', isUuid, 'params']), async (req, res) => {
     const domainArticle = await getFullArticle(req.params['id']);
 
@@ -41,10 +55,13 @@ export function createArticlesRouter() {
       perex: domainArticle.perex,
       content: domainArticle.content,
       author: domainArticle.author.name,
+      createdAt: domainArticle.postedAt,
       comments: domainArticle.comments.map((comment) => ({
         id: comment.id,
         text: comment.text,
         author: comment.author?.name,
+        postedAt: comment.postedAt,
+        votes: comment.votes,
       })),
     });
   });

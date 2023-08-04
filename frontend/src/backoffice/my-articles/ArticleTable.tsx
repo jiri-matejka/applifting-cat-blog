@@ -4,21 +4,25 @@ import { createColumnHelper } from '@tanstack/react-table';
 import type { Article, FullArticle } from '@/types/article';
 import { getArticles } from '@/articles-list/getArticles';
 import { DataTable } from './DataTable';
+import { useFetchData } from '@/api/useFetchData';
+import { ApiFetchedContent } from '@/common/ApiFetchedContent';
 
-type MyArticlesTableType = Pick<
-  FullArticle,
-  'articleId' | 'title' | 'perex'
-> & {
-  commentsCount: number;
-};
+type MyArticlesTableType = Pick<FullArticle, 'id' | 'title' | 'perex'>;
 
 export function ArticleTable() {
-  const data: MyArticlesTableType[] = getArticles().map((article) => ({
-    commentsCount: article.comments.length,
-    ...article,
-  }));
+  const { data, isLoading, isError } = useFetchData<Article[]>({
+    endpoint: '/articles/my-articles',
+  });
 
-  return <DataTable<MyArticlesTableType> data={data} columns={columns} />;
+  return (
+    <ApiFetchedContent
+      isLoading={isLoading}
+      isError={isError}
+      errorText="Error fetching my articles"
+    >
+      {data && <DataTable<MyArticlesTableType> data={data} columns={columns} />}
+    </ApiFetchedContent>
+  );
 }
 
 const columnHelper = createColumnHelper<MyArticlesTableType>();
@@ -32,14 +36,10 @@ const columns = [
     cell: (info) => info.getValue(),
     header: () => <span>Perex</span>,
   }),
-  columnHelper.accessor('commentsCount', {
-    cell: (info) => info.getValue(),
-    header: () => <span>Comments</span>,
-  }),
   columnHelper.display({
     id: 'actions',
     header: () => <span>Actions</span>,
-    cell: (props) => <RowActions articleId={props.row.original.articleId} />,
+    cell: (props) => <RowActions articleId={props.row.original.id} />,
     enableSorting: false,
   }),
 ];
