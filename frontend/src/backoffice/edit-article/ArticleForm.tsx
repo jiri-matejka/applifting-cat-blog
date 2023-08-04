@@ -12,7 +12,6 @@ import { useForm, Controller } from 'react-hook-form';
 import useAxios from 'axios-hooks';
 import type { Article, CreateArticleRequest } from '@/types/article';
 import { publicApi } from '@/api/axiosConfig';
-import { API_KEY } from '@/api/constants';
 
 type ArticleFormData = {
   title: string;
@@ -46,9 +45,7 @@ export function ArticleForm({
         {
           method: 'POST',
           headers: {
-            'X-API-KEY': API_KEY,
             'Content-Type': 'application/json',
-            Authorization: 'Bearer 723da993-2e4b-48e4-9eb2-c37620ada461',
           },
         },
       )

@@ -1,19 +1,19 @@
 export type Comment = {
   articleId: string;
   author: string;
-  content: string;
-  commentId: string;
+  text: string;
+  id: string;
   postedAt: Date;
   votes: number;
 };
 
 export type Article = {
-  articleId: string;
+  id: string;
   title: string;
   perex: string;
-  imageId: string;
   createdAt: Date;
   lastUpdatedAt: Date;
+  author: string;
 };
 
 export type FullArticle = Article & {

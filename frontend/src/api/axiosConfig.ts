@@ -3,7 +3,7 @@ import { configure } from 'axios-hooks';
 import LRU from 'lru-cache';
 
 export const publicApi = axios.create({
-  baseURL: 'https://fullstack.exercise.applifting.cz',
+  baseURL: 'http://localhost:3000',
 });
 
 // export const backofficeApi = axios.create({

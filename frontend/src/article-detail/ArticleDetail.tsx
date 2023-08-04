@@ -30,6 +30,10 @@ export function ArticleDetailPage() {
         ...articleResponse,
         createdAt: new Date(articleResponse.createdAt),
         lastUpdatedAt: new Date(articleResponse.lastUpdatedAt),
+        comments: articleResponse.comments.map((comment) => ({
+          ...comment,
+          postedAt: new Date(comment.postedAt),
+        })),
       }
     : undefined;
 

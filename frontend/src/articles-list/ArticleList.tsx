@@ -6,7 +6,7 @@ import { useFetchData } from '../api/useFetchData';
 import { ApiFetchedContent } from '../common/ApiFetchedContent';
 
 export function ArticleList() {
-  const { data, isLoading, isError } = useFetchData<paginationResult<Article>>({
+  const { data, isLoading, isError } = useFetchData<Article[]>({
     endpoint: '/articles',
   });
 
@@ -22,10 +22,10 @@ export function ArticleList() {
         errorText="There was an error loading articles."
       >
         <VStack spacing={4} alignItems="start" pt="4">
-          {data?.items?.length === 0
+          {data?.length === 0
             ? 'No articles written yet'
-            : data?.items.map((article) => (
-                <ArticleListItem key={article.articleId} {...article} />
+            : data?.map((article) => (
+                <ArticleListItem key={article.id} {...article} />
               ))}
         </VStack>
       </ApiFetchedContent>

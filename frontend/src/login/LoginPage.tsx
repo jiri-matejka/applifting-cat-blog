@@ -1,5 +1,4 @@
 import { publicApi } from '@/api/axiosConfig';
-import { API_KEY } from '@/api/constants';
 import {
   LOCAL_STORAGE_TOKEN_KEY as LOCAL_STORAGE_TOKEN_KEY,
   useAuthentication,
@@ -57,29 +56,23 @@ export function LoginPage() {
 
   const onSubmit = (data: LoginFormData) => {
     setErrorText(null);
-    publicApi
-      .post('/login', data, {
-        headers: {
-          'X-API-KEY': API_KEY,
+    publicApi.post('/login', data).then(
+      (response) => {
+        localStorage.setItem(
+          LOCAL_STORAGE_TOKEN_KEY,
+          response.data.access_token,
+        );
+        navigate(getMyArticlesRoute());
+      },
+      ({
+        message,
+        response: {
+          data: { message: apiMessage },
         },
-      })
-      .then(
-        (response) => {
-          localStorage.setItem(
-            LOCAL_STORAGE_TOKEN_KEY,
-            response.data.access_token,
-          );
-          navigate(getMyArticlesRoute());
-        },
-        ({
-          message,
-          response: {
-            data: { message: apiMessage },
-          },
-        }) => {
-          setErrorText(apiMessage ?? message ?? 'Unknown error occured');
-        },
-      );
+      }) => {
+        setErrorText(apiMessage ?? message ?? 'Unknown error occured');
+      },
+    );
   };
 
   return (

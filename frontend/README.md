@@ -33,3 +33,8 @@ pagination in the list of articles
 deleting articles:
 
 - cascade comment deletion
+- returning IDs from database if needed for further processing
+
+displaying how user voted for a comment
+
+sharing API types between fronend and backend

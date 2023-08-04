@@ -12,12 +12,12 @@ export function Comment({ comment }: { comment: CommentType }) {
   return (
     <CommentWrapperWithImage imageSrc="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9">
       <HStack>
-        <Text fontWeight="bold">{comment.author}</Text>
+        <Text fontWeight="bold">{comment.author ?? 'Anonymous'}</Text>
         <Text color="gray.500" fontSize="sm">
           {timeAgo(comment.postedAt)}
         </Text>
       </HStack>
-      <Text mt={1}>{comment.content}</Text>
+      <Text mt={1}>{comment.text}</Text>
       <Votes votes={comment.votes} />
     </CommentWrapperWithImage>
   );

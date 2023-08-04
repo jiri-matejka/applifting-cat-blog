@@ -11,7 +11,7 @@ export function Comments({ comments }: { comments: CommentType[] }) {
       </Heading>
       <JoinDiscussion />
       {comments.map((comment) => (
-        <Comment key={comment.commentId} comment={comment} />
+        <Comment key={comment.id} comment={comment} />
       ))}
     </Box>
   );

@@ -1,4 +1,3 @@
-import { API_KEY } from '@/api/constants';
 import { publicApi } from '@/api/axiosConfig';
 import { useEffect, useState } from 'react';
 
@@ -21,7 +20,6 @@ export function useFetchData<TData extends object>({
     publicApi
       .get<TData>(endpoint, {
         headers: {
-          'X-API-KEY': API_KEY,
           'Content-Type': 'application/json',
         },
       })

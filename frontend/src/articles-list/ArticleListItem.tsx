@@ -5,11 +5,11 @@ import { getArticleDetailRoute } from '@/routing/routes';
 
 type ArticleItemProps = Pick<
   Article,
-  'articleId' | 'title' | 'perex' | 'lastUpdatedAt'
+  'id' | 'title' | 'perex' | 'lastUpdatedAt'
 >;
 
 export function ArticleListItem({
-  articleId,
+  id: articleId,
   perex,
   title,
   lastUpdatedAt,
