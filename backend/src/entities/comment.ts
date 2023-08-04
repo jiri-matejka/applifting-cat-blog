@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   ManyToOne,
+  Index,
 } from 'typeorm';
 import { User } from './user';
 import { Article } from './article';
@@ -17,6 +18,7 @@ export class Comment {
   text!: string;
 
   @ManyToOne(() => Article)
+  @Index()
   article!: Article;
 
   @Column({ default: 0 })

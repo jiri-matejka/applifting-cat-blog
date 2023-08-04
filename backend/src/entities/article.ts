@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  Index,
 } from 'typeorm';
 import { User } from './user';
 
@@ -29,6 +30,7 @@ export class Article {
   lastUpdatedAt!: Date;
 
   @Column()
+  @Index()
   authorUsername!: string;
 
   @ManyToOne(() => User)
