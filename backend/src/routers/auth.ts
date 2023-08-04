@@ -1,11 +1,12 @@
 import { generateAccessToken } from '@src/utils/passwordUtils';
-import { Router } from 'express';
+import { CookieOptions, Router } from 'express';
 import jetValidator from 'jet-validator';
 import { sign } from 'jsonwebtoken';
 import { isNonEmptyString } from './isNonEmptyString';
 import { authenticateUser } from '@src/domain/users';
 import { getEnvVariables } from '@src/envVariables';
 import { ACCESS_TOKEN_COOKIE_KEY } from '@src/constants';
+import { STATUS_CODES } from '@src/utils/httpStatusCodes';
 
 export function createAuthRouter(): Router {
   const router = Router();
@@ -35,16 +36,27 @@ export function createAuthRouter(): Router {
         req.body.username as string,
       );
       return res
-        .cookie(ACCESS_TOKEN_COOKIE_KEY, token, {
-          maxAge: Number(envi.jwt.Exp),
-          httpOnly: true,
-          secure: envi.nodeEnv === 'production',
-          signed: true,
-        })
-        .status(200)
+        .cookie(ACCESS_TOKEN_COOKIE_KEY, token, getAuthCookieOptions({}))
+        .status(STATUS_CODES.OK)
         .json({ message: 'Logged in successfully' });
     },
   );
 
+  router.post('/logout', (req, res) => {
+    res
+      .clearCookie(ACCESS_TOKEN_COOKIE_KEY, getAuthCookieOptions({ maxAge: 0 }))
+      .sendStatus(STATUS_CODES.OK);
+  });
+
   return router;
+}
+
+function getAuthCookieOptions({ maxAge }: { maxAge?: number }): CookieOptions {
+  const vars = getEnvVariables();
+  return {
+    maxAge: maxAge ? maxAge : Number(vars.jwt.Exp),
+    httpOnly: true,
+    secure: vars.nodeEnv === 'production',
+    signed: true,
+  };
 }

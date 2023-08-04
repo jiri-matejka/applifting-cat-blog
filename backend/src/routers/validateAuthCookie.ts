@@ -13,6 +13,7 @@ export const validateAuthCookie: RequestHandler = (
   if (!cookie) {
     res.statusMessage = 'Missing authorization cookie';
     res.sendStatus(401);
+    return;
   }
 
   verify(cookie, vars.jwt.Secret, (err, decoded) => {
