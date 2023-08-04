@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import jetValidator from 'jet-validator';
-import { isNonEmptyString, isUuid } from './utils';
+import { isNonEmptyString, isUuid, sendResultToResponse } from './utils';
 import {
   createArticle,
   getArticlesWithoutComments,
@@ -8,7 +8,9 @@ import {
 } from '@src/domain/articles';
 import { isError, isOk } from '@src/domain/result';
 import { optionallyExtractUsernameFromCookie } from './validateAuthCookie';
-import { createComment } from '@src/domain/comments';
+import { changeCommentVote, createComment } from '@src/domain/comments';
+import { STATUS_CODES } from '@src/utils/httpStatusCodes';
+import { send } from 'process';
 
 export function createCommentsRouter() {
   const router = Router();
@@ -25,14 +27,25 @@ export function createCommentsRouter() {
         articleId: req.body.articleId as string,
         authorUsername: res.locals.authorizedUsername as string,
       });
-      if (isError(result)) {
-        if (result.message) res.statusMessage = result.message;
-        res.sendStatus(result.code);
-        return;
-      } else if (isOk(result)) {
-        res.json(result.value);
-        return;
-      }
+      sendResultToResponse(result, res, STATUS_CODES.CREATED);
+    },
+  );
+
+  router.post(
+    '/:id/upvote',
+    validate(['id', isUuid, 'params']),
+    async (req, res) => {
+      const result = await changeCommentVote(req.params['id'], '', 1);
+      sendResultToResponse(result, res, STATUS_CODES.CREATED);
+    },
+  );
+
+  router.post(
+    '/:id/downvote',
+    validate(['id', isUuid, 'params']),
+    async (req, res) => {
+      const result = await changeCommentVote(req.params['id'], '', -1);
+      sendResultToResponse(result, res, STATUS_CODES.CREATED);
     },
   );
 

@@ -1,4 +1,4 @@
-export type ErrorCodeAndMessage = { code: number; message: string };
+export type ErrorCodeAndMessage = { code: number; message?: string };
 
 type Ok<TValue = void> = {
   readonly tag: 'Ok';
@@ -14,7 +14,7 @@ export type Error = {
 };
 export type ResultWithData<T> = Ok<T> | Error;
 
-export function ok<T>(value?: T): Ok<T> {
+export function ok<T = void>(value?: T): Ok<T> {
   return { tag: 'Ok', value };
 }
 

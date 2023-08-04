@@ -37,3 +37,25 @@ export async function createComment({
 
   return ok();
 }
+
+export async function changeCommentVote(
+  commentId: string,
+  ipAddress: string,
+  voteDelta: number,
+) {
+  const commentRepo = dbDataSource.getRepository(Comment);
+
+  // check if this IP already voted
+
+  const updateResult = await commentRepo
+    .createQueryBuilder()
+    .from(Comment, 'comment')
+    .setParameter('delta', voteDelta)
+    .update({ votes: () => 'votes + :delta' })
+    .where('id = :id', { id: commentId })
+    .execute();
+
+  return updateResult.affected === 1
+    ? ok()
+    : error({ code: STATUS_CODES.NOT_FOUND });
+}
