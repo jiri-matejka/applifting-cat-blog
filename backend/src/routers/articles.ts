@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import jetValidator from 'jet-validator';
 import { isNonEmptyString, isUuid } from './utils';
-import { validateAuthCookie as verifyAndParseAuthCookie } from './validateAuthCookie';
+import { authorizeUserFromCookie } from './validateAuthCookie';
 import {
   createArticle,
   getFullArticle,
@@ -54,7 +54,7 @@ export function createArticlesRouter() {
     validate(['title', isNonEmptyString]),
     validate(['perex', isNonEmptyString]),
     validate(['content', isNonEmptyString]),
-    verifyAndParseAuthCookie,
+    authorizeUserFromCookie,
     async (req, res) => {
       const created = await createArticle(
         res.locals.authorizedUsername as string,
@@ -75,7 +75,7 @@ export function createArticlesRouter() {
     validate(['title', isNonEmptyString]),
     validate(['perex', isNonEmptyString]),
     validate(['content', isNonEmptyString]),
-    verifyAndParseAuthCookie,
+    authorizeUserFromCookie,
     async (req, res) => {
       const result = await patchArticle(
         res.locals.authorizedUsername as string,

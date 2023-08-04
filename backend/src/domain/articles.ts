@@ -86,3 +86,8 @@ export const patchArticle = async (
 
   return ok();
 };
+
+export function getArticle(articleId: string) {
+  const articleRepo = dbDataSource.getRepository(Article);
+  return articleRepo.findOneBy({ id: articleId });
+}

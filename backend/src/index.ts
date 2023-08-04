@@ -12,6 +12,7 @@ import { initializeDataSource } from './database/dataSource';
 import { createArticlesRouter } from './routers/articles';
 import { seedUsers } from './database/seedUsers';
 import { createAuthRouter } from './routers/auth';
+import { createCommentsRouter } from './routers/commentRouter';
 
 loadEnv();
 const envVariables = getEnvVariables();
@@ -33,6 +34,7 @@ if (envVariables.nodeEnv === 'production') {
 
 app.use('/articles', createArticlesRouter());
 app.use('/auth', createAuthRouter());
+app.use('/comments', createCommentsRouter());
 
 initializeDataSource()
   .then(seedUsers)

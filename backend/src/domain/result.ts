@@ -1,38 +1,45 @@
-//export type SimpleResult<E extends string = string> = Ok<void> | Error<E>;
-
-//export type ComplexResult<E = string> = Ok | ComplexError<E>;
-
 export type ErrorCodeAndMessage = { code: number; message: string };
 
-type Ok = {
+type Ok<TValue = void> = {
   readonly tag: 'Ok';
-  //readonly value: T;
+  readonly value?: TValue;
 };
 
-// type ComplexError<E> = {
-//   readonly tag: 'Error';
-//   readonly error: E;
-// };
+export type Result<TValue = void> = Ok<TValue> | Error;
 
-export type Result = Ok | Error;
 export type Error = {
   readonly tag: 'Error';
   readonly code: number;
-  readonly message: string;
+  readonly message?: string;
 };
+export type ResultWithData<T> = Ok<T> | Error;
 
-export function ok(): Ok {
-  return { tag: 'Ok' };
+export function ok<T>(value?: T): Ok<T> {
+  return { tag: 'Ok', value };
 }
+
+// export function okWithData<T>(value: T): Ok<T> {
+//   return { tag: 'Ok', value };
+// }
 
 export function error(error: ErrorCodeAndMessage): Error {
   return { tag: 'Error', ...error };
 }
 
-export function isOk(result: Result): result is Ok {
+export function isOk<T>(result: Result<T>): result is Ok<T> {
   return result.tag === 'Ok';
 }
 
-export function isError(result: Result): result is Error {
+// export function isOkWithData<T>(result: ResultWithData<T>): result is Ok<T> {
+//   return result.tag === 'Ok';
+// }
+
+export function isError<T>(result: Result<T>): result is Error {
   return result.tag === 'Error';
 }
+
+// export function isErrorFromResultWithData<T>(
+//   result: ResultWithData<T>,
+// ): result is Error {
+//   return result.tag === 'Error';
+// }
