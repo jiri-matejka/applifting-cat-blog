@@ -6,8 +6,10 @@ import {
   UpdateDateColumn,
   ManyToOne,
   Index,
+  OneToMany,
 } from 'typeorm';
 import { User } from './user';
+import { Comment } from './comment';
 
 @Entity()
 export class Article {
@@ -35,4 +37,7 @@ export class Article {
 
   @ManyToOne(() => User)
   author!: User;
+
+  @OneToMany(() => Comment, (comment) => comment.article)
+  comments!: Comment[];
 }

@@ -31,7 +31,7 @@ export const createArticle = async (
   return true;
 };
 
-export const getArticles = async () => {
+export const getArticlesWithoutComments = async () => {
   const articleRepo = dbDataSource.getRepository(Article);
 
   return await articleRepo
@@ -40,6 +40,19 @@ export const getArticles = async () => {
     .from(Article, 'article')
     .innerJoinAndSelect('article.author', 'author')
     .getMany();
+};
+
+export const getFullArticle = async (id: string) => {
+  const articleRepo = dbDataSource.getRepository(Article);
+
+  return await articleRepo
+    .createQueryBuilder()
+    .select('article')
+    .from(Article, 'article')
+    .innerJoinAndSelect('article.author', 'author')
+    .leftJoinAndSelect('article.comments', 'comment')
+    .where('article.id = :id', { id })
+    .getOne();
 };
 
 export type ArticleForPatch = Pick<Article, 'title' | 'perex' | 'content'>;

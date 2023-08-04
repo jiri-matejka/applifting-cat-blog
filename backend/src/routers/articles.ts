@@ -1,9 +1,15 @@
 import { Router } from 'express';
 import jetValidator from 'jet-validator';
-import { isNonEmptyString } from './isNonEmptyString';
+import { isNonEmptyString, isUuid } from './utils';
 import { validateAuthCookie as verifyAndParseAuthCookie } from './validateAuthCookie';
-import { createArticle, getArticles, patchArticle } from '@src/domain/articles';
+import {
+  createArticle,
+  getFullArticle,
+  getArticlesWithoutComments,
+  patchArticle,
+} from '@src/domain/articles';
 import { isError, isOk } from '@src/domain/result';
+import { STATUS_CODES } from '@src/utils/httpStatusCodes';
 
 export function createArticlesRouter() {
   const router = Router();
@@ -11,7 +17,7 @@ export function createArticlesRouter() {
 
   router.get('/', async (req, res) => {
     res.json(
-      (await getArticles()).map((domainArticle) => ({
+      (await getArticlesWithoutComments()).map((domainArticle) => ({
         id: domainArticle.id,
         title: domainArticle.title,
         perex: domainArticle.perex,
@@ -19,6 +25,28 @@ export function createArticlesRouter() {
         author: domainArticle.author.name,
       })),
     );
+  });
+
+  router.get('/:id', validate(['id', isUuid, 'params']), async (req, res) => {
+    const domainArticle = await getFullArticle(req.params['id']);
+
+    if (!domainArticle) {
+      res.sendStatus(STATUS_CODES.NOT_FOUND);
+      return;
+    }
+
+    res.json({
+      id: domainArticle.id,
+      title: domainArticle.title,
+      perex: domainArticle.perex,
+      content: domainArticle.content,
+      author: domainArticle.author.name,
+      comments: domainArticle.comments.map((comment) => ({
+        id: comment.id,
+        text: comment.text,
+        author: comment.author?.name,
+      })),
+    });
   });
 
   router.post(
@@ -42,6 +70,7 @@ export function createArticlesRouter() {
 
   router.patch(
     '/:id',
+    validate(['id', isUuid, 'params']),
     // for simplicity, I require all fields to be present
     validate(['title', isNonEmptyString]),
     validate(['perex', isNonEmptyString]),
