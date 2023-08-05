@@ -6,6 +6,8 @@ import { getArticles } from '@/articles-list/getArticles';
 import { DataTable } from './DataTable';
 import { useFetchData } from '@/api/useFetchData';
 import { ApiFetchedContent } from '@/common/ApiFetchedContent';
+import { useNavigate } from 'react-router-dom';
+import { getMyArticleEditRoute } from '@/routing/routes';
 
 type MyArticlesTableType = Pick<FullArticle, 'id' | 'title' | 'perex'>;
 
@@ -45,19 +47,14 @@ const columns = [
 ];
 
 function RowActions({ articleId }: { articleId: string }) {
+  const navigate = useNavigate();
+
   return (
     <Flex>
       <Button variant="ghost" aria-label="edit">
         <EditIcon
           onClick={() => {
-            console.log('edit', articleId);
-          }}
-        />
-      </Button>
-      <Button variant="ghost" aria-label="edit">
-        <DeleteIcon
-          onClick={() => {
-            console.log('delete', articleId);
+            navigate(getMyArticleEditRoute(articleId));
           }}
         />
       </Button>

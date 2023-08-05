@@ -2,9 +2,11 @@ import { Button } from '@chakra-ui/react';
 import { HeadingWithChildren } from '../HeadingWithButton';
 import { ArticleForm } from './ArticleForm';
 import { AuthenticatedSection } from '@/login/AuthenticatedSection';
+import { useParams } from 'react-router-dom';
 
 export function EditArticlePage() {
   const formId = 'edit-article-form';
+  const { articleId } = useParams();
 
   return (
     <AuthenticatedSection>
@@ -13,7 +15,7 @@ export function EditArticlePage() {
           Publish
         </Button>
       </HeadingWithChildren>
-      <ArticleForm mode="edit" formId={formId} />
+      <ArticleForm formId={formId} articleId={articleId} />
     </AuthenticatedSection>
   );
 }

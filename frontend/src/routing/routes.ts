@@ -17,3 +17,7 @@ export function getRecentArticlesRoute() {
 export function getMyArticlesRoute() {
   return '/backoffice/my-articles';
 }
+
+export function getMyArticleEditRoute(id: string) {
+  return `/backoffice/my-articles/${id}`;
+}

@@ -13,7 +13,7 @@ export function CreateArticlePage() {
           Publish
         </Button>
       </HeadingWithChildren>
-      <ArticleForm mode="create" formId={formId} />
+      <ArticleForm formId={formId} />
     </AuthenticatedSection>
   );
 }
