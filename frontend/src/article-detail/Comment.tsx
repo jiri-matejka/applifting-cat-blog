@@ -1,8 +1,9 @@
-import { Text, HStack, Button } from '@chakra-ui/react';
+import { Text, HStack, Button, useToast } from '@chakra-ui/react';
 import { type Comment as CommentType } from '../types/article';
 import { timeAgo } from '@/utils/timeUtils';
 import { CommentWrapperWithImage } from './CommentWrapperWithImage';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
+import { publicApi } from '@/api/axiosConfig';
 
 const alwaysDisplaySignFormatter = new Intl.NumberFormat(undefined, {
   signDisplay: 'always',
@@ -24,21 +25,50 @@ export function Comment({
         </Text>
       </HStack>
       <Text mt={1}>{comment.text}</Text>
-      <Votes votes={comment.votes} />
+      <Votes votes={comment.votes} commentId={comment.id} />
     </CommentWrapperWithImage>
   );
 }
 
-function Votes({ votes }: { votes: number }) {
+function Votes({ votes, commentId }: { votes: number; commentId: string }) {
+  const toast = useToast();
+
   return (
     <HStack alignItems="center">
       <Text>{alwaysDisplaySignFormatter.format(votes)}</Text>
-      <Button variant="ghost" paddingInlineStart={2} paddingInlineEnd={2}>
+      <Button
+        variant="ghost"
+        paddingInlineStart={2}
+        paddingInlineEnd={2}
+        onClick={() => voteOnComment('up', commentId)}
+      >
         <ArrowUpIcon />
       </Button>
-      <Button variant="ghost" paddingInlineStart={2} paddingInlineEnd={2}>
+      <Button
+        variant="ghost"
+        paddingInlineStart={2}
+        paddingInlineEnd={2}
+        onClick={() => voteOnComment('down', commentId)}
+      >
         <ArrowDownIcon />
       </Button>
     </HStack>
   );
+
+  function voteOnComment(vote: 'up' | 'down', commentId: string) {
+    publicApi
+      .post(`/comments/${commentId}/${vote}vote`)
+      .then(undefined, (res) => {
+        const title =
+          res.response?.status === 400
+            ? 'You already voted on this comment'
+            : 'Error voting on comment';
+        toast({
+          title,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      });
+  }
 }
