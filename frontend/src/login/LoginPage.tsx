@@ -35,7 +35,7 @@ export function LoginPage() {
   } = useForm<LoginFormData>();
 
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthentication();
+  const { isAuthenticated, saveAuthToken } = useAuthentication();
 
   const [errorText, setErrorText] = useState<string | null>(null);
 
@@ -48,7 +48,12 @@ export function LoginPage() {
   const onSubmit = (data: LoginFormData) => {
     setErrorText(null);
     publicApi.post('/auth/login', data).then(
-      (response) => {
+      ({ data: { auth_token } }) => {
+        if (!auth_token) {
+          setErrorText('No authentication token received');
+          return;
+        }
+        saveAuthToken(auth_token);
         navigate(getMyArticlesRoute());
       },
       ({

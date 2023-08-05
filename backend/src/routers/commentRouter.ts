@@ -7,7 +7,7 @@ import {
   patchArticle,
 } from '@src/domain/articles';
 import { isError, isOk } from '@src/domain/result';
-import { optionallyExtractUsernameFromCookie } from './validateAuthCookie';
+import { optionallyExtractUsernameFromToken } from './validateAuthToken';
 import { changeCommentVote, createComment } from '@src/domain/comments';
 import { STATUS_CODES } from '@src/utils/httpStatusCodes';
 import { send } from 'process';
@@ -20,7 +20,7 @@ export function createCommentsRouter() {
     '/',
     validate(['text', isNonEmptyString]),
     validate(['articleId', isUuid]),
-    optionallyExtractUsernameFromCookie,
+    optionallyExtractUsernameFromToken,
     async (req, res) => {
       const result = await createComment({
         text: req.body.text as string,

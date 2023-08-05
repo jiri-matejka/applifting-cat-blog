@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import jetValidator from 'jet-validator';
 import { isNonEmptyString, isUuid } from './utils';
-import { authorizeUserFromCookie } from './validateAuthCookie';
+import { authorizeUser } from './validateAuthToken';
 import {
   createArticle,
   getFullArticle,
@@ -27,7 +27,7 @@ export function createArticlesRouter() {
     );
   });
 
-  router.get('/my-articles', authorizeUserFromCookie, async (req, res) => {
+  router.get('/my-articles', authorizeUser, async (req, res) => {
     const result = (
       await getArticlesWithoutComments(res.locals.authorizedUsername)
     ).map((domainArticle) => ({
@@ -71,7 +71,7 @@ export function createArticlesRouter() {
     validate(['title', isNonEmptyString]),
     validate(['perex', isNonEmptyString]),
     validate(['content', isNonEmptyString]),
-    authorizeUserFromCookie,
+    authorizeUser,
     async (req, res) => {
       const created = await createArticle(
         res.locals.authorizedUsername as string,
@@ -92,7 +92,7 @@ export function createArticlesRouter() {
     validate(['title', isNonEmptyString]),
     validate(['perex', isNonEmptyString]),
     validate(['content', isNonEmptyString]),
-    authorizeUserFromCookie,
+    authorizeUser,
     async (req, res) => {
       const result = await patchArticle(
         res.locals.authorizedUsername as string,

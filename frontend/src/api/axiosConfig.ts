@@ -1,9 +1,14 @@
+import { getAuthToken } from '@/hooks/useAuthentication';
 import axios from 'axios';
 import { configure } from 'axios-hooks';
 import LRU from 'lru-cache';
 
 export const publicApi = axios.create({
-  baseURL: 'http://catblog.com:3000', //'http://localhost:3000',
+  baseURL: 'http://localhost:3000',
+  withCredentials: true,
+  headers: {
+    Authorization: getAuthToken() ? `Bearer ${getAuthToken()}` : undefined,
+  },
 });
 
 // export const backofficeApi = axios.create({

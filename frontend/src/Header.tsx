@@ -18,7 +18,12 @@ import {
 } from '@chakra-ui/react';
 import { useAuthentication } from './hooks/useAuthentication';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { getLoginRoute, getRecentArticlesRoute } from './routing/routes';
+import {
+  getLoginRoute,
+  getMyArticlesRoute,
+  getRecentArticlesRoute,
+} from './routing/routes';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 type Props = {
   href: string;
@@ -26,6 +31,7 @@ type Props = {
 };
 
 const Links = [{ text: 'Recent articles', link: getRecentArticlesRoute() }];
+const BackofficeLinks = [{ text: 'My articles', link: getMyArticlesRoute() }];
 
 function NavLink({ children, href }: Props) {
   return (
@@ -80,14 +86,27 @@ export function Header() {
                     cursor="pointer"
                     minW={0}
                   >
-                    <Avatar
-                      size="sm"
-                      src={
-                        'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                      }
-                    />
+                    <Flex alignItems="center">
+                      <ChevronDownIcon />
+                      <Avatar
+                        size="sm"
+                        src={
+                          'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                        }
+                      />
+                    </Flex>
                   </MenuButton>
+
                   <MenuList>
+                    {BackofficeLinks.map((link) => (
+                      <MenuItem
+                        key={link.text}
+                        as={ReactRouterLink}
+                        to={link.link}
+                      >
+                        {link.text}
+                      </MenuItem>
+                    ))}
                     <MenuItem onClick={logout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>

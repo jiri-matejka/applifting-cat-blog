@@ -1,18 +1,19 @@
 import { NextFunction, Request, RequestHandler } from 'express';
-import { ACCESS_TOKEN_COOKIE_KEY } from '@src/constants';
 import { getEnvVariables } from '@src/envVariables';
 import { verify } from 'jsonwebtoken';
 import { Result, error, isError, isOk, ok } from '@src/domain/result';
 import { STATUS_CODES } from '@src/utils/httpStatusCodes';
 
-export const authorizeUserFromCookie: RequestHandler = async (
+export const authorizeUser: RequestHandler = async (
   req: Request,
   res,
   next: NextFunction,
 ) => {
   const envVars = getEnvVariables();
-  const cookie = req.signedCookies[ACCESS_TOKEN_COOKIE_KEY];
-  const result = await validateAuthCookie(envVars.jwt.Secret, cookie);
+  const result = await validateAuthToken(
+    envVars.jwt.Secret,
+    req.headers['authorization'],
+  );
   if (isOk(result)) {
     res.locals.authorizedUsername = result.value;
     next();
@@ -27,14 +28,16 @@ export const authorizeUserFromCookie: RequestHandler = async (
 /// If access token cookie is present, extract username from it and
 /// store it in res.locals.authorizedUsername
 /// Otherwise do nothing
-export const optionallyExtractUsernameFromCookie: RequestHandler = async (
+export const optionallyExtractUsernameFromToken: RequestHandler = async (
   req: Request,
   res,
   next: NextFunction,
 ) => {
   const envVars = getEnvVariables();
-  const cookie = req.signedCookies[ACCESS_TOKEN_COOKIE_KEY];
-  const result = await validateAuthCookie(envVars.jwt.Secret, cookie);
+  const result = await validateAuthToken(
+    envVars.jwt.Secret,
+    req.headers['authorization'],
+  );
   if (isOk(result)) {
     res.locals.authorizedUsername = result.value;
     next();
@@ -45,25 +48,42 @@ export const optionallyExtractUsernameFromCookie: RequestHandler = async (
   }
 };
 
-export async function validateAuthCookie(
+export async function validateAuthToken(
   jwtSecret: string,
-  cookie: string | undefined,
+  header: string | undefined,
 ): Promise<Result<string>> {
-  if (!cookie) {
+  if (!header) {
     return error({
-      message: 'Missing authorization cookie',
+      message: 'Missing Authorization header',
       code: STATUS_CODES.UNAUTHORIZED,
     });
   }
 
-  return new Promise<Result<string>>((resolve, reject) => {
-    verify(cookie, jwtSecret, (err, decoded) => {
+  const parts = header.split(' ');
+  if (!parts || parts.length !== 2) {
+    return error({
+      message: 'Invalid Authorization header',
+      code: STATUS_CODES.UNAUTHORIZED,
+    });
+  }
+
+  if (!parts[0].startsWith('Bearer')) {
+    return error({
+      message: 'Invalid Authorization header',
+      code: STATUS_CODES.UNAUTHORIZED,
+    });
+  }
+
+  const token = parts[1];
+
+  return new Promise<Result<string>>((resolve) => {
+    verify(token, jwtSecret, (err, decoded) => {
       if (err) {
         console.log('Error while validating JWT', err);
         resolve(
           error({
             code: STATUS_CODES.UNAUTHORIZED,
-            message: 'Missing authorization cookie',
+            message: 'Missing authorization token',
           }),
         );
       } else {
@@ -79,7 +99,7 @@ export async function validateAuthCookie(
           resolve(
             error({
               code: STATUS_CODES.UNAUTHORIZED,
-              message: 'Invalid authorization cookie',
+              message: 'Invalid authorization token',
             }),
           );
         }
