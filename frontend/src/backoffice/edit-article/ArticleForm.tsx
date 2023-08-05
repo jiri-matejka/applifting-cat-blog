@@ -59,6 +59,7 @@ export function ArticleForm({
           });
         },
         (error) => {
+          console.error('Error occured while creating article', error);
           toast({
             title: 'Error occured while creating article',
             status: 'error',

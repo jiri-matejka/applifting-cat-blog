@@ -1,8 +1,5 @@
 import { publicApi } from '@/api/axiosConfig';
-import {
-  LOCAL_STORAGE_TOKEN_KEY as LOCAL_STORAGE_TOKEN_KEY,
-  useAuthentication,
-} from '@/hooks/useAuthentication';
+import { useAuthentication } from '@/hooks/useAuthentication';
 import { getMyArticlesRoute } from '@/routing/routes';
 import {
   Flex,
@@ -29,12 +26,6 @@ type LoginFormData = {
   password: string;
 };
 
-type LoginResponse = {
-  access_token: string;
-  expires_in: number;
-  token_type: 'bearer';
-};
-
 export function LoginPage() {
   const {
     control,
@@ -56,21 +47,23 @@ export function LoginPage() {
 
   const onSubmit = (data: LoginFormData) => {
     setErrorText(null);
-    publicApi.post('/login', data).then(
+    publicApi.post('/auth/login', data).then(
       (response) => {
-        localStorage.setItem(
-          LOCAL_STORAGE_TOKEN_KEY,
-          response.data.access_token,
-        );
         navigate(getMyArticlesRoute());
       },
       ({
         message,
+
         response: {
           data: { message: apiMessage },
+          status,
         },
       }) => {
-        setErrorText(apiMessage ?? message ?? 'Unknown error occured');
+        const resultMessage =
+          status === 401
+            ? 'Invalid username or password'
+            : apiMessage ?? message ?? 'Unknown error occured';
+        setErrorText(resultMessage);
       },
     );
   };

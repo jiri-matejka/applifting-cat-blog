@@ -25,10 +25,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Links = [
-  { text: 'Recent articles', link: getRecentArticlesRoute() },
-  { text: 'About', link: '#' },
-];
+const Links = [{ text: 'Recent articles', link: getRecentArticlesRoute() }];
 
 function NavLink({ children, href }: Props) {
   return (
@@ -50,7 +47,7 @@ function NavLink({ children, href }: Props) {
 
 export function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isAuthenticated } = useAuthentication();
+  const { isAuthenticated, logout } = useAuthentication();
 
   return (
     <>
@@ -91,10 +88,7 @@ export function Header() {
                     />
                   </MenuButton>
                   <MenuList>
-                    <MenuItem>Link 1</MenuItem>
-                    <MenuItem>Link 2</MenuItem>
-                    <MenuDivider />
-                    <MenuItem>Link 3</MenuItem>
+                    <MenuItem onClick={logout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>
               ) : (

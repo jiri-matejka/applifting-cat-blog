@@ -21,7 +21,8 @@ const envVariables = getEnvVariables();
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:9000'],
+  origin: 'http://app.catblog.localhost:9000',
+  credentials: true,
 };
 
 app.use(cors(corsOptions));

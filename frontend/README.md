@@ -22,7 +22,18 @@ remove chakra custom theme if not used
 Refetching:
 when creating new article, do not refetch all articles, but just add created one (from response of the POST request)
 
-Missing:
+## TODO
+
+- napojeni FE na BFF, login, logout
+- websocket
+- openAPI dokumentaci a Graphql
+- graphql endpoint a dokumentaci
+- dokerizace
+- integracni test???
+- security v expressu, https://auth0.com/docs/secure/tokens
+
+## Missing:
+
 images
 i18n
 caching
@@ -38,3 +49,5 @@ deleting articles:
 displaying how user voted for a comment
 
 sharing API types between fronend and backend
+
+refresh token support
