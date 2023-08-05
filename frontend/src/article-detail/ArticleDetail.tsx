@@ -7,7 +7,10 @@ import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { useFetchData } from '@/api/useFetchData';
 import { ApiFetchedContent } from '@/common/ApiFetchedContent';
 
-type ArticleBodyProps = Pick<FullArticle, 'createdAt' | 'content' | 'comments'>;
+type ArticleBodyProps = Pick<
+  FullArticle,
+  'createdAt' | 'content' | 'comments' | 'id'
+>;
 
 export function ArticleDetailPage() {
   const { articleId } = useParams();
@@ -56,7 +59,7 @@ export function ArticleDetailPage() {
   );
 }
 
-function ArticleBody({ createdAt, content, comments }: ArticleBodyProps) {
+function ArticleBody({ createdAt, content, comments, id }: ArticleBodyProps) {
   return (
     <HStack>
       <Box width="37.5rem">
@@ -71,7 +74,7 @@ function ArticleBody({ createdAt, content, comments }: ArticleBodyProps) {
           </ReactMarkdown>
         </Box>
         <Divider mt={4} mb={4} />
-        <Comments comments={comments} />
+        <Comments comments={comments} articleId={id} />
       </Box>
     </HStack>
   );
