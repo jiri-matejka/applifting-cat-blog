@@ -11,6 +11,7 @@ import { optionallyExtractUsernameFromToken } from './validateAuthToken';
 import { changeCommentVote, createComment } from '@src/domain/comments';
 import { STATUS_CODES } from '@src/utils/httpStatusCodes';
 import { send } from 'process';
+import { commentCallbacks } from '@src/database/commentSubscriber';
 
 export function createCommentsRouter() {
   const router = Router();

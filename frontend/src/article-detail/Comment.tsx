@@ -4,6 +4,7 @@ import { timeAgo } from '@/utils/timeUtils';
 import { CommentWrapperWithImage } from './CommentWrapperWithImage';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import { publicApi } from '@/api/axiosConfig';
+import type { CommentForDisplayType } from './Comments';
 
 const alwaysDisplaySignFormatter = new Intl.NumberFormat(undefined, {
   signDisplay: 'always',
@@ -13,7 +14,7 @@ export function Comment({
   comment,
   articleId,
 }: {
-  comment: CommentType;
+  comment: CommentForDisplayType;
   articleId: string;
 }) {
   return (

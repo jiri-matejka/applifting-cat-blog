@@ -1,10 +1,11 @@
 import { dbDataSource } from '@src/database/dataSource';
-import { Result, error, isError, ok } from './result';
+import { Result, error, isError, isOk, ok } from './result';
 import { getUser } from './users';
 import { getArticle as getArticle } from './articles';
 import { STATUS_CODES, statusCodeType } from '@src/utils/httpStatusCodes';
 import { Comment } from '@src/entities/comment';
 import { CommentVote } from '@src/entities/commentVote';
+import { commentCallbacks } from '@src/database/commentSubscriber';
 
 export async function createComment({
   text,
@@ -14,7 +15,7 @@ export async function createComment({
   text: string;
   articleId: string;
   authorUsername?: string;
-}): Promise<Result<statusCodeType>> {
+}): Promise<Result<{ code: statusCodeType }>> {
   const commentRepo = dbDataSource.getRepository(Comment);
 
   // the comments can be posted by anonymous users
@@ -44,7 +45,7 @@ export async function changeCommentVote(
   ipAddress: string,
   voteDelta: 1 | -1,
 ) {
-  return await dbDataSource.transaction(async (manager) => {
+  const result = await dbDataSource.transaction(async (manager) => {
     async function handleExistingVotes(): Promise<Result<statusCodeType>> {
       // check if this IP already voted
       const existingVote = await manager.findOneBy(CommentVote, {
@@ -87,10 +88,23 @@ export async function changeCommentVote(
       .setParameter('delta', voteDelta)
       .update({ votes: () => 'votes + :delta' })
       .where('id = :id', { id: commentId })
+      .returning(['id', 'votes'])
       .execute();
 
     return updateResult.affected === 1
-      ? ok(resultFromExistingVotes.value)
+      ? ok({
+          code: resultFromExistingVotes.value,
+          newVotes: updateResult.raw[0].votes as number,
+        })
       : error({ code: STATUS_CODES.NOT_FOUND });
   });
+
+  if (isOk(result)) {
+    commentCallbacks.afterVotingCallback({
+      commentId,
+      votes: result.value!.newVotes,
+    });
+  }
+
+  return result;
 }

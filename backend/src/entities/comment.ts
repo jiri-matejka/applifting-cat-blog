@@ -5,6 +5,8 @@ import {
   CreateDateColumn,
   ManyToOne,
   Index,
+  AfterUpdate,
+  AfterInsert,
 } from 'typeorm';
 import { User } from './user';
 import { Article } from './article';
@@ -29,4 +31,10 @@ export class Comment {
 
   @CreateDateColumn()
   postedAt!: Date;
+
+  @AfterUpdate()
+  onCommentUpdate() {}
+
+  @AfterInsert()
+  onCommentInsert() {}
 }

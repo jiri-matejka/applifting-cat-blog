@@ -51,3 +51,7 @@ displaying how user voted for a comment
 sharing API types between fronend and backend
 
 refresh token support
+
+receiving realtime updated only for comments under opened article..
+by sending event upstream with article Id.. backend would filter comment updates to just
+opened article.

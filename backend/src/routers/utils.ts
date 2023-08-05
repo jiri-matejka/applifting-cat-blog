@@ -11,7 +11,7 @@ export function isUuid(value: unknown): boolean {
   return typeof value === 'string' && validate(value);
 }
 
-export function sendResultToResponse<T extends statusCodeType>(
+export function sendResultToResponse<T extends { code?: statusCodeType }>(
   result: Result<T>,
   res: Response,
   codeForOk: number = STATUS_CODES.OK,
@@ -20,6 +20,6 @@ export function sendResultToResponse<T extends statusCodeType>(
     if (result.message) res.statusMessage = result.message;
     res.sendStatus(result.code);
   } else if (isOk(result)) {
-    res.sendStatus(result.value ?? codeForOk);
+    res.sendStatus(result.value?.code ?? codeForOk);
   }
 }
