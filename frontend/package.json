@@ -3,15 +3,9 @@
   "version": "0.0.1",
   "scripts": {
     "build": "webpack --progress --config webpack.config.babel.js",
-    "check-size": "webpack --config webpack.config.babel.js --profile --json > webpack-stats.json && webpack-bundle-analyzer webpack-stats.json",
     "check-types": "tsc --project tsconfig.json --noEmit",
     "dev": "yarn serve",
     "lint": "yarn lint:all",
-    "lint:all": "yarn lint:scripts && yarn check-types",
-    "lint:all:fix": "yarn lint:scripts:fix",
-    "lint:fix": "yarn lint:all:fix",
-    "lint:scripts": "eslint --ignore-path .gitignore **/*.{js,jsx,cjs,json,ts,tsx}",
-    "lint:scripts:fix": "yarn lint:scripts --fix",
     "serve": "cross-env NODE_ENV=development webpack serve --config webpack.config.babel.js",
     "test": "jest --no-coverage",
     "test:watch": "yarn test --watch --no-coverage"
@@ -81,7 +75,6 @@
     "@emotion/styled": "~11.11.0",
     "@tanstack/react-table": "~8.9.3",
     "axios": "~1.4.0",
-    "axios-hooks": "~4.0.0",
     "chakra-ui-markdown-renderer": "~4.1.0",
     "framer-motion": "~10.13.1",
     "react": "~18.2.0",

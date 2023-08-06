@@ -1,4 +1,3 @@
-import { get } from 'react-hook-form';
 import { useAuthentication } from './useAuthentication';
 
 export function useAvatarImage() {

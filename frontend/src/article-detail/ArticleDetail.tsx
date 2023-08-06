@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Image, HStack, Divider } from '@chakra-ui/react';
+import { Box, Heading, Text, HStack, Divider } from '@chakra-ui/react';
 import { type ArticleDetailResponse, type FullArticle } from '../types/article';
 import { useParams } from 'react-router-dom';
 import { Comments } from './Comments';

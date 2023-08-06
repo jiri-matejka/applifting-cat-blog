@@ -12,7 +12,6 @@ const alwaysDisplaySignFormatter = new Intl.NumberFormat(undefined, {
 
 export function Comment({
   comment,
-  articleId,
 }: {
   comment: CommentForDisplayType;
   articleId: string;

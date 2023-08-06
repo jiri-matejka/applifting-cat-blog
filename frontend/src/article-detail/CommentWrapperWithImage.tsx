@@ -1,4 +1,4 @@
-import { Box, Image, HStack, Avatar } from '@chakra-ui/react';
+import { Box, HStack, Avatar } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 
 export function CommentWrapperWithImage({

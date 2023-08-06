@@ -7,12 +7,8 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Button,
-  Heading,
-  Text,
-  useColorModeValue,
   Alert,
   AlertDescription,
   AlertIcon,
@@ -27,12 +23,7 @@ type LoginFormData = {
 };
 
 export function LoginPage() {
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormData>();
+  const { control, handleSubmit } = useForm<LoginFormData>();
 
   const navigate = useNavigate();
   const { isAuthenticated, saveAuthToken } = useAuthentication();

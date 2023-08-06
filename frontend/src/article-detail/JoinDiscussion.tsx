@@ -1,5 +1,5 @@
-import { Text, HStack, VStack, useToast } from '@chakra-ui/react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { HStack, VStack, useToast } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import { Input, Button } from '@chakra-ui/react';
 import { CommentWrapperWithImage } from './CommentWrapperWithImage';
 import { RequiredValidationError } from '@/common/ValidationError';

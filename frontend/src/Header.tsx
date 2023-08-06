@@ -8,10 +8,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuDivider,
-  useDisclosure,
   useColorModeValue,
-  Stack,
   Image,
   Container,
   Link,
@@ -53,7 +50,6 @@ function NavLink({ children, href }: Props) {
 }
 
 export function Header() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { isAuthenticated, logout } = useAuthentication();
   const avatarSrc = useAvatarImage();
 
@@ -114,16 +110,6 @@ export function Header() {
               )}
             </Flex>
           </Flex>
-
-          {isOpen ? (
-            <Box pb={4} display={{ md: 'none' }}>
-              <Stack as="nav" spacing={4}>
-                {/* {Links.map((link) => (
-                  <NavLink key={link}>{link}</NavLink>
-                ))} */}
-              </Stack>
-            </Box>
-          ) : null}
         </Container>
       </Box>
     </>

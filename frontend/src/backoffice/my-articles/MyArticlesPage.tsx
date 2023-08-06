@@ -1,7 +1,7 @@
 import { ArticleTable } from './ArticleTable';
 import { HeadingWithChildren } from '../HeadingWithButton';
-import { Button, Link } from '@chakra-ui/react';
-import { getCreateArticleRoute, getLoginRoute } from '@/routing/routes';
+import { Button } from '@chakra-ui/react';
+import { getCreateArticleRoute } from '@/routing/routes';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { AuthenticatedSection } from '@/login/AuthenticatedSection';
 

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, Image, Link } from '@chakra-ui/react';
+import { Box, Heading, Text, Link } from '@chakra-ui/react';
 import { type Article } from '../types/article';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { getArticleDetailRoute } from '@/routing/routes';

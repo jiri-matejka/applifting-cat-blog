@@ -1,7 +1,6 @@
 import { Heading, VStack } from '@chakra-ui/react';
 import { ArticleListItem } from './ArticleListItem';
 import type { Article } from '@/types/article';
-import type { paginationResult } from '@/types/paginationResult';
 import { useFetchData } from '../api/useFetchData';
 import { ApiFetchedContent } from '../common/ApiFetchedContent';
 
