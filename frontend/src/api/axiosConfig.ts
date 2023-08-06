@@ -18,19 +18,16 @@ export function configureAxiosHooks() {
   configure({ axios: publicApi, cache });
 }
 
-// axios.interceptors.request.use(
-//   async (config) => {
-//     const token = localStorage.getItem("token");
-
-//     if (token) {
-//       config.headers = {
-//         authorization: `Bearer ${token}`
-//       };
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
+publicApi.interceptors.request.use(
+  async (config) => {
+    const token = getAuthToken();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 // response interceptor intercepting 401 responses, refreshing token and retrying the request
 // axios.interceptors.response.use(
