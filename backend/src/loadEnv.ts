@@ -15,11 +15,11 @@ export function loadEnv() {
     },
   });
 
-  const result2 = dotenv.config({
+  const result = dotenv.config({
     path: path.join(__dirname, `../env/${args.env}.env`),
   });
 
-  if (result2.error) {
-    throw result2.error;
+  if (result.error) {
+    throw result.error;
   }
 }

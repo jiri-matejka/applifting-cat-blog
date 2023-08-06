@@ -4,21 +4,21 @@ import { DataSource } from 'typeorm';
 import { Comment } from '@src/entities/comment';
 import { CommentVote } from '@src/entities/commentVote';
 import { CommentSubscriber } from './commentSubscriber';
+import { EnvVariables } from '@src/envVariables';
 
-export const dbDataSource = new DataSource({
-  type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'postgres',
-  database: 'postgres',
-  entities: [Article, User, Comment, CommentVote],
-  logging: true,
-  logger: 'simple-console',
-  synchronize: true,
-  subscribers: [CommentSubscriber],
-});
+export let dbDataSource = new DataSource({ type: 'postgres' });
 
-export async function initializeDataSource() {
+export async function initializeDataSource(envVariables: EnvVariables) {
+  console.log(envVariables);
+  dbDataSource = new DataSource({
+    type: 'postgres',
+    ...envVariables.postgres,
+    entities: [Article, User, Comment, CommentVote],
+    logging: true,
+    logger: 'simple-console',
+    synchronize: true,
+    subscribers: [CommentSubscriber],
+  });
+
   await dbDataSource.initialize();
 }
