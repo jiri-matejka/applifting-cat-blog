@@ -36,7 +36,7 @@ export class CommentSubscriber implements EntitySubscriberInterface<Comment> {
       text: event.entity.text,
       votes: event.entity.votes,
       postedAt: event.entity.postedAt,
-      author: event.entity.author?.username,
+      author: event.entity.author?.name,
     });
   }
 
