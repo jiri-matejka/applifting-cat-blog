@@ -1,0 +1,239 @@
+openapi: 3.0.0
+info:
+  title: CatBlog API
+  version: 1.0.0
+  description: >-
+    APIs available in the CatBlog Engine application.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+paths:
+  '/articles':
+    get:
+      summary: Returns all articles, without comments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      description: Article UUID
+                      type: string
+                    title:
+                      type: string
+                    perex:
+                      type: string
+                    content:
+                      type: string
+                    author:
+                      type: string
+                      description: Author name
+                  required: ['id', 'title', 'perex', 'content', 'author']
+      tags: []
+    post:
+      summary: Create a new article
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Title
+                perex:
+                  type: string
+                  example: Perex
+                content:
+                  type: string
+                  example: Content
+              required: ['title', 'perex', 'content']
+      responses:
+        '201':
+          description: Article was created
+        '400':
+          description: Some parameter is missing
+        '401':
+          description: You are not authorized with the Bearer token
+      tags: []
+  '/articles/my-articles':
+    get:
+      summary: Get articles that I created, without comments
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    perex:
+                      type: string
+                    content:
+                      type: string
+                    author:
+                      type: string
+                  required: ['id', 'title', 'perex', 'content', 'author']
+        '401':
+          description: You are not authorized with the Bearer token'
+      tags: []
+  '/articles/{id}':
+    get:
+      summary: 'Get article detail including comments'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 'b5477851-4d3c-4266-93a2-94baf9f88bef'
+                  title:
+                    type: string
+                    example: 'Title'
+                  perex:
+                    type: string
+                    example: Perex
+                  content:
+                    type: string
+                    example: Content
+                  author:
+                    type: string
+                    example: 'Your name'
+                  createdAt:
+                    type: string
+                    example: '2023-08-03T15:17:33.434Z'
+                  comments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        text:
+                          type: string
+                        author:
+                          type: string
+                        postedAt:
+                          type: string
+                        votes:
+                          type: number
+                      required: ['id', 'text', 'postedAt', 'votes', 'author']
+                    example:
+                      - id: '0da71f5e-729d-4099-9c0a-812cd9c3cc6b'
+                        text: Text
+                        author: 'Commenter name'
+                        postedAt: '2023-08-06T08:32:34.781Z'
+                        votes: 0
+      tags: []
+    patch:
+      summary: 'Update existing article'
+      description: 'You are allowed to update only articles that you created.'
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            description: UUID
+            type: string
+      responses:
+        '204':
+          description: 'Article was updated'
+        '401':
+          description: 'You are not authorized with the Bearer token'
+      tags: []
+  '/comments':
+    post:
+      summary: '/comments'
+      responses:
+        '201':
+          description: Comment was created
+        '404':
+          description: 'Article not found'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  example: Comment text
+                articleId:
+                  type: string
+                  example: b5477851-4d3c-4266-93a2-94baf9f88bef
+              required: ['text', 'articleId']
+      tags: []
+  '/auth/login':
+    post:
+      summary: '/auth/login'
+      responses:
+        '200':
+          description: 'Logged in successfully'
+        '401':
+          description: 'Invalid username or password'
+      tags: []
+
+  '/comments/{id}/upvote':
+    post:
+      summary: 'Vote positively for this comment'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Your vote was recorded
+        '200':
+          description: Your previous vote was withdrawn
+        '400':
+          description: You cannot upvote a comment more than once
+      tags: []
+  '/comments/{id}/downvote':
+    post:
+      summary: 'Vote negatively for this comment'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Your vote was recorded
+        '200':
+          description: Your previous vote was withdrawn
+        '400':
+          description: You cannot downvote a comment more than once
+      tags: []
+tags: []
