@@ -1,9 +1,10 @@
-## About
+## CatBlog app
 
-docker compose --env-file ./env/production.env up
+This is
+
+`docker compose --env-file ./env/production.env up`
 
 This project was created with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript).
-
 
 ## Available Scripts
 
@@ -38,7 +39,6 @@ Run the production build (Must be built first).
 ### `npm start -- --env="name of env file" (default is production).`
 
 Run production build with a different env file.
-
 
 ## Additional Notes
 

@@ -2,11 +2,9 @@
   "name": "backend",
   "version": "0.0.0",
   "scripts": {
-    "build": "npx ts-node build.ts",
-    "build2": "tsc --build tsconfig.prod.json",
+    "build": "tsc --build tsconfig.prod.json",
     "lint": "yarn eslint --ext .ts src/",
     "lint2": "yarn eslint **/*.{js,jsx,cjs,json,ts,tsx}",
-    "lint:tests": "npx eslint --ext .ts spec/",
     "start-prod": "node -r module-alias/register ./dist --env=production",
     "dev": "nodemon",
     "test": "jest"
