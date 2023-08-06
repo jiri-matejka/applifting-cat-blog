@@ -66,8 +66,6 @@ function ArticleBody({ createdAt, content, comments, id }: ArticleBodyProps) {
         <Text color="gray.500" fontSize="sm" mb="4">
           {createdAt.toDateString()}
         </Text>
-        {/* {}
-        <Image src={todo_ImageUrl} alt={title} mb={4} objectFit="cover" /> */}
         <Box mt={4}>
           <ReactMarkdown components={ChakraUIRenderer()} skipHtml>
             {content}

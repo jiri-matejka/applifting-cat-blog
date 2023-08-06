@@ -102,8 +102,8 @@ export function ArticleForm({
   function onSubmit(data: ArticleFormData) {
     publicApi
       .request<CreateArticleRequest>({
-        url: '/articles',
-        method: articleId ? 'POST' : 'PATCH',
+        url: `/articles${articleId ? `/${articleId}` : ''}`,
+        method: articleId ? 'PATCH' : 'POST',
         data,
         headers: {
           'Content-Type': 'application/json',
