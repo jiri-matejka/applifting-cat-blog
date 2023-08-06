@@ -1,4 +1,4 @@
-import { Box, Image, HStack } from '@chakra-ui/react';
+import { Box, Image, HStack, Avatar } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 
 export function CommentWrapperWithImage({
@@ -10,7 +10,7 @@ export function CommentWrapperWithImage({
 }) {
   return (
     <HStack alignItems="start" mb={5}>
-      <Image rounded="full" src={imageSrc} boxSize={10} />
+      <Avatar src={imageSrc} />
       <Box flexGrow={1}>{children}</Box>
     </HStack>
   );
