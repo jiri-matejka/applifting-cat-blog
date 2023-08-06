@@ -2,21 +2,15 @@ import { getAuthToken } from '@/hooks/useAuthentication';
 import axios from 'axios';
 import { configure } from 'axios-hooks';
 import LRU from 'lru-cache';
+import { REST_API_ENDPOINT } from './constants';
 
 export const publicApi = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: REST_API_ENDPOINT,
   withCredentials: true,
   headers: {
     Authorization: getAuthToken() ? `Bearer ${getAuthToken()}` : undefined,
   },
 });
-
-// export const backofficeApi = axios.create({
-//   baseURL: process.env.API_ENDPOINT,
-//   headers: {
-//     'Content-Type': 'multipart/form-data',
-//   },
-// });
 
 const cache = new LRU({ max: 10 });
 

@@ -60,6 +60,7 @@ export const getFullArticle = async (id: string) => {
     .leftJoinAndSelect('article.comments', 'comment')
     .leftJoinAndSelect('comment.author', 'commentAuthor')
     .where('article.id = :id', { id })
+    .orderBy('comment.postedAt', 'DESC')
     .getOne();
 };
 

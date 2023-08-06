@@ -2,7 +2,14 @@ import { Box, Heading } from '@chakra-ui/react';
 import { type Comment as CommentType } from '../types/article';
 import { JoinDiscussion } from './JoinDiscussion';
 import { Comment } from './Comment';
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
+import { WEBSOCKET_ENDPOINT } from '@/api/constants';
 
 export type CommentForDisplayType = Pick<
   CommentType,
@@ -16,51 +23,61 @@ export function Comments({
   comments: CommentForDisplayType[];
   articleId: string;
 }) {
-  const [actualComments, setActualComments] =
+  const [currentComments, setCurrentComments] =
     useState<CommentForDisplayType[]>(comments);
+
+  useRealtimeComments(setCurrentComments);
+
+  return (
+    <Box mt={4} width="full">
+      <Heading as="h3" size="md" mb={2}>
+        Comments{' '}
+        {currentComments.length > 0 ? `(${currentComments.length})` : ''}
+      </Heading>
+      <JoinDiscussion articleId={articleId} />
+      {currentComments.map((comment) => (
+        <Comment key={comment.id} comment={comment} articleId={articleId} />
+      ))}
+    </Box>
+  );
+}
+
+function useRealtimeComments(
+  setRealtimeComments: Dispatch<SetStateAction<CommentForDisplayType[]>>,
+) {
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    wsRef.current = new WebSocket('ws://localhost:3000/ws');
-
-    wsRef.current.onopen = () => {
-      // on connecting, do nothing but log it to the console
-      console.log('connected');
-    };
+    wsRef.current = new WebSocket(WEBSOCKET_ENDPOINT);
 
     wsRef.current.onmessage = (evt) => {
-      // listen to data sent from the websocket server
       const message = JSON.parse(evt.data);
 
       if (message && message.operation === 'INSERT') {
-        console.log('INSERT DETECT', message);
-        const newCommentWithDate = {
+        const newCommentWithParsedDate = {
           ...message.data,
           postedAt: new Date(message.data.postedAt),
         };
-        const newComments = [...actualComments, newCommentWithDate].sort(
-          (a, b) => b.postedAt - a.postedAt, // newest first
-        );
-        setActualComments(newComments);
-      }
-      if (message && message.operation === 'VOTE') {
-        console.log('VOTE DETECT', message);
-        const updatedComments = actualComments.map((comment) => {
-          if (comment.id === message.data.id) {
-            return { ...comment, votes: message.data.votes };
-          }
-          return comment;
-        });
-        setActualComments(updatedComments);
-      }
+        const getNewComments = (oldComments: CommentForDisplayType[]) => [
+          newCommentWithParsedDate, // it's the newest comment, no need to sort them
+          ...oldComments,
+        ];
 
-      console.log(message);
+        setRealtimeComments(getNewComments);
+      } else if (message && message.operation === 'VOTE') {
+        const getNewComments = (oldComments: CommentForDisplayType[]) =>
+          oldComments.map((comment) => {
+            if (comment.id === message.data.commentId) {
+              return { ...comment, votes: message.data.votes };
+            }
+            return comment;
+          });
+
+        setRealtimeComments(getNewComments);
+      }
     };
 
-    wsRef.current.onclose = () => {
-      console.log('disconnected');
-      // automatically try to reconnect on connection loss
-    };
+    // TODO: automatically try to reconnect on connection loss
 
     return () => {
       if (wsRef.current) {
@@ -69,16 +86,4 @@ export function Comments({
       }
     };
   }, []);
-
-  return (
-    <Box mt={4} width="full">
-      <Heading as="h3" size="md" mb={2}>
-        Comments {comments.length > 0 ? `(${comments.length})` : ''}
-      </Heading>
-      <JoinDiscussion articleId={articleId} />
-      {actualComments.map((comment) => (
-        <Comment key={comment.id} comment={comment} articleId={articleId} />
-      ))}
-    </Box>
-  );
 }
