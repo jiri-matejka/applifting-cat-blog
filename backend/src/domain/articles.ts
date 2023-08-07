@@ -17,7 +17,6 @@ export const createArticle = async (
 
   const user = await userRepo.findOneBy({ username });
   if (!user) {
-    console.log('User not found', username);
     return false;
   }
 

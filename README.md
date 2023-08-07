@@ -3,7 +3,7 @@
 This is a fullstack exercise project according to https://github.com/Applifting/fullstack-exercise/blob/master/assignment.md.
 
 Detailed frontend documentation is [here](frontend/README.md).
-Details backend documentation is [here](backend/README.md).
+Detailed backend documentation is [here](backend/README.md).
 
 ## Quickstart
 

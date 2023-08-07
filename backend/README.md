@@ -1,45 +1,44 @@
 ## CatBlog app
 
-This is
+This is a REST + Websocket backend for CatBlog app.
 
+Start the containers with
 `docker compose --env-file ./env/production.env up`
 
-This project was created with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript).
+And stop them with
+`docker compose --env-file ./env/production.env down`
 
-## Available Scripts
+OpenAPI documentation: [api.yml](api.yml).
 
-### `npm run dev`
+## Available scripts
 
-Run the server in development mode.
+- `build`: Creates production build
+- `lint`: Lints the project
+- `start-prod` Starts built project
+- `dev` Starts app in dev mode, uses nodemon which restarts server after source code changes
+- `test` Runs unit tests with Jest
 
-### `npm test`
+## Tech Stack
 
-Run all unit-tests with hot-reloading.
+- TypeScript
+- Express server
+- TypeORM
+- Postgres database
+- Jest
 
-### `npm test -- --testFile="name of test file" (i.e. --testFile=Users).`
+## What is missing
 
-Run a single unit-test.
+GraphQL server and integration tests, I don't have time left for this now.
 
-### `npm run test:no-reloading`
+## Architecture
 
-Run all unit-tests without hot-reloading.
+Routers (`routers`) contains validation of the parameters, calling business logic and returning a result to the client. Business logic is placed inside `domain`.
+Business logic calls dataStore.
 
-### `npm run lint`
+## What can be improved
 
-Check for linting errors.
+Decouple business logic from the database by using dependency injection, which would enable unit testing of the business logic.
 
-### `npm run build`
+## Seeding data
 
-Build the project for production.
-
-### `npm start`
-
-Run the production build (Must be built first).
-
-### `npm start -- --env="name of env file" (default is production).`
-
-Run production build with a different env file.
-
-## Additional Notes
-
-- If `npm run dev` gives you issues with bcrypt on MacOS you may need to run: `npm rebuild bcrypt --build-from-source`.
+There is a function `[seedUsers](src/database/seedUsers.ts)` which creates two sample users of they are not present in the database. It is called on server startup.
