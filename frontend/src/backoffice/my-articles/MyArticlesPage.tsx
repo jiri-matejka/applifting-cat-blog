@@ -5,7 +5,7 @@ import { getCreateArticleRoute } from '@/routing/routes';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { AuthenticatedSection } from '@/login/AuthenticatedSection';
 
-export function MyArticlesPage() {
+export default function MyArticlesPage() {
   return (
     <AuthenticatedSection>
       <HeadingWithChildren headingText="My articles">

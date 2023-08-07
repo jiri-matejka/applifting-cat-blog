@@ -22,7 +22,7 @@ type LoginFormData = {
   password: string;
 };
 
-export function LoginPage() {
+export default function LoginPage() {
   const { control, handleSubmit } = useForm<LoginFormData>();
 
   const navigate = useNavigate();
@@ -35,34 +35,6 @@ export function LoginPage() {
       navigate(getMyArticlesRoute());
     }
   }, [isAuthenticated]);
-
-  const onSubmit = (data: LoginFormData) => {
-    setErrorText(null);
-    publicApi.post('/auth/login', data).then(
-      ({ data: { auth_token } }) => {
-        if (!auth_token) {
-          setErrorText('No authentication token received');
-          return;
-        }
-        saveAuthToken(auth_token);
-        navigate(getMyArticlesRoute());
-      },
-      ({
-        message,
-
-        response: {
-          data: { message: apiMessage },
-          status,
-        },
-      }) => {
-        const resultMessage =
-          status === 401
-            ? 'Invalid username or password'
-            : apiMessage ?? message ?? 'Unknown error occured';
-        setErrorText(resultMessage);
-      },
-    );
-  };
 
   return (
     <Flex align={'center'} justify={'center'} py={4} px={6}>
@@ -83,11 +55,6 @@ export function LoginPage() {
                 );
               }}
             />
-            {/* <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input required {...register('email')} />
-            </FormControl> */}
-
             <Controller
               name="password"
               control={control}
@@ -100,10 +67,6 @@ export function LoginPage() {
                 </FormControl>
               )}
             />
-            {/*
-            <FormControl id="password" isRequired>
-               required {...register('password')} />
-            </FormControl> */}
             <Stack spacing={6}>
               <Button type="submit" colorScheme="blue">
                 Log in
@@ -120,4 +83,36 @@ export function LoginPage() {
       </Box>
     </Flex>
   );
+
+  function onSubmit(data: LoginFormData) {
+    setErrorText(null);
+    publicApi
+      .post('/auth/login', data)
+      .then(
+        ({ data: { auth_token } }) => {
+          if (!auth_token) {
+            setErrorText('No authentication token received');
+            return;
+          }
+          saveAuthToken(auth_token);
+          navigate(getMyArticlesRoute());
+        },
+        ({
+          message,
+          response: {
+            data: { message: apiMessage },
+            status,
+          },
+        }) => {
+          const resultMessage =
+            status === 401
+              ? 'Invalid username or password'
+              : apiMessage ?? message ?? 'Unknown error occured';
+          setErrorText(resultMessage);
+        },
+      )
+      .catch(() => {
+        setErrorText('Error during login');
+      });
+  }
 }

@@ -4,7 +4,7 @@ import { ArticleForm } from './ArticleForm';
 import { AuthenticatedSection } from '@/login/AuthenticatedSection';
 import { useParams } from 'react-router-dom';
 
-export function EditArticlePage() {
+export default function EditArticlePage() {
   const formId = 'edit-article-form';
   const { articleId } = useParams();
 

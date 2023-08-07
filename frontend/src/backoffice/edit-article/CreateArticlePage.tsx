@@ -3,7 +3,7 @@ import { HeadingWithChildren } from '../HeadingWithButton';
 import { ArticleForm } from './ArticleForm';
 import { AuthenticatedSection } from '@/login/AuthenticatedSection';
 
-export function CreateArticlePage() {
+export default function CreateArticlePage() {
   const formId = 'create-article-form';
 
   return (

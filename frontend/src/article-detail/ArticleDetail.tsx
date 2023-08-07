@@ -12,7 +12,7 @@ type ArticleBodyProps = Pick<
   'createdAt' | 'content' | 'comments' | 'id'
 >;
 
-export function ArticleDetailPage() {
+export default function ArticleDetailPage() {
   const { articleId } = useParams();
 
   const {

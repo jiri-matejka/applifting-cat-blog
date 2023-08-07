@@ -1,5 +1,5 @@
 import { ArticleList } from './articles-list/ArticleList';
 
-export function Home() {
+export default function Home() {
   return <ArticleList />;
 }
