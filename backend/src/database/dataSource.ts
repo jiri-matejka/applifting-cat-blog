@@ -9,7 +9,6 @@ import { EnvVariables } from '@src/envVariables';
 export let dbDataSource = new DataSource({ type: 'postgres' });
 
 export async function initializeDataSource(envVariables: EnvVariables) {
-  console.log(envVariables);
   dbDataSource = new DataSource({
     type: 'postgres',
     ...envVariables.postgres,
@@ -20,5 +19,22 @@ export async function initializeDataSource(envVariables: EnvVariables) {
     subscribers: [CommentSubscriber],
   });
 
-  await dbDataSource.initialize();
+  await initializeWithRetry();
+}
+
+async function initializeWithRetry() {
+  try {
+    await dbDataSource.initialize();
+  } catch (err) {
+    if (err?.code === 'ECONNREFUSED' /* || err?.code === 'ENOTFOUND'*/) {
+      console.error(
+        `Could not connect to database. Retrying in 3s...`,
+        err?.code,
+      );
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await initializeWithRetry();
+    } else {
+      throw err;
+    }
+  }
 }
