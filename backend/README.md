@@ -1,4 +1,4 @@
-## CatBlog app
+## Backend
 
 This is a REST + Websocket backend for CatBlog app.
 
@@ -28,7 +28,7 @@ OpenAPI documentation: [api.yml](api.yml), I did not include Swagger UI.
 
 ## What is missing
 
-GraphQL server and integration tests, I don't have time left for this now.
+GraphQL server and integration tests, I don't have time left for this now. I have only two simple unit tests.
 
 ## Architecture
 
@@ -38,6 +38,8 @@ Business logic calls dataStore.
 ## What can be improved
 
 Decouple business logic from the database by using dependency injection, which would enable unit testing of the business logic.
+
+Adding a rate limiting with e.g. [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible).
 
 ## Seeding data
 

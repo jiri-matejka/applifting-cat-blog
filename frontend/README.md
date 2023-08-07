@@ -48,6 +48,10 @@ Realtime commenting and voting feature is implemented by websockets.
 
 ## Missing or incomplete features
 
+- Integration tests, I don't have time left for this. I have only a single unit test.
+
+- Featured image uploads, I don't have time left for this.
+
 - Pagination in article lists is missing. Implementation would be standard, to accept `offset` and `limit` query parameters, propagate them to the postgres' LIMIT and OFFSET, and return page information to the client.
 
 - Deleting of articles - this would be very straightforward to do so I omitted that. Regarding implementation, it depends if it would be a soft delete (with a new column `deletedAt`) or hard delete, including deleting comments and votes (by delete cascade for example).
@@ -62,7 +66,7 @@ I don't need to maintain any state except useState hooks (and react-hook-form fi
 
 Currently there is no caching implemented. Caching would be easy to implement, but the downside would be that server changes from other users would be invisible for client until he does a full reload (or uses an extra button).
 
-If caching would be required, I would use https://axios-cache-interceptor.js.org/ which sets up an interceptor in Axios for caching GET requests. It would require to invalidate its cache when modifiying data on backend (POST AND PATCH operations).
+If caching would be required, I would use https://axios-cache-interceptor.js.org/ which sets up an interceptor in Axios for caching GET requests. It would require to invalidate its cache when modifiying data on backend (POST AND PATCH operations). Also it would need to invalidate the cache for opened article when an events comes from a websocket.
 
 Note that in dev mode, I use React.StrictMode which double calls useEffects, thus you can see double requests to the API. This does not happen in production build.
 
