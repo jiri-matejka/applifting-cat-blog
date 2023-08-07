@@ -20,7 +20,7 @@
     "@src": "dist"
   },
   "engines": {
-    "node": ">=8.10.0"
+    "node": ">=18.12.1"
   },
   "dependencies": {
     "bcrypt": "~5.1.0",
