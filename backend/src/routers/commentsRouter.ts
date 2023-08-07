@@ -1,17 +1,10 @@
 import { Router } from 'express';
 import jetValidator from 'jet-validator';
-import { isNonEmptyString, isUuid, sendResultToResponse } from './utils';
-import {
-  createArticle,
-  getArticlesWithoutComments,
-  patchArticle,
-} from '@src/domain/articles';
-import { isError, isOk } from '@src/domain/result';
-import { optionallyExtractUsernameFromToken } from './validateAuthToken';
+import { isNonEmptyString, isUuid } from './utils/validationUtils';
+import { sendResultToResponse } from './utils/sendResultToResponse';
+import { optionallyExtractUsernameFromToken } from './utils/optionallyExtractUsernameFromToken';
 import { changeCommentVote, createComment } from '@src/domain/comments';
 import { STATUS_CODES } from '@src/utils/httpStatusCodes';
-import { send } from 'process';
-import { commentCallbacks } from '@src/database/commentSubscriber';
 
 export function createCommentsRouter() {
   const router = Router();

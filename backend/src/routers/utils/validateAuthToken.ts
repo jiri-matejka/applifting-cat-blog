@@ -1,52 +1,6 @@
-import { NextFunction, Request, RequestHandler } from 'express';
-import { getEnvVariables } from '@src/envVariables';
 import { verify } from 'jsonwebtoken';
-import { Result, error, isError, isOk, ok } from '@src/domain/result';
+import { Result, error, ok } from '@src/domain/result';
 import { STATUS_CODES } from '@src/utils/httpStatusCodes';
-
-export const authorizeUser: RequestHandler = async (
-  req: Request,
-  res,
-  next: NextFunction,
-) => {
-  const envVars = getEnvVariables();
-  const result = await validateAuthToken(
-    envVars.jwt.Secret,
-    req.headers['authorization'],
-  );
-  if (isOk(result)) {
-    res.locals.authorizedUsername = result.value;
-    next();
-  } else if (isError(result)) {
-    if (result.message) {
-      res.statusMessage = result.message;
-    }
-    res.sendStatus(result.code);
-  }
-};
-
-/// If access token cookie is present, extract username from it and
-/// store it in res.locals.authorizedUsername
-/// Otherwise do nothing
-export const optionallyExtractUsernameFromToken: RequestHandler = async (
-  req: Request,
-  res,
-  next: NextFunction,
-) => {
-  const envVars = getEnvVariables();
-  const result = await validateAuthToken(
-    envVars.jwt.Secret,
-    req.headers['authorization'],
-  );
-  if (isOk(result)) {
-    res.locals.authorizedUsername = result.value;
-    next();
-  } else if (isError(result)) {
-    // in this case, the endpoint is not protected by authorization
-    // so we don't care if the cookie is invalid
-    next();
-  }
-};
 
 export async function validateAuthToken(
   jwtSecret: string,

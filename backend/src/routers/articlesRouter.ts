@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import jetValidator from 'jet-validator';
-import { isNonEmptyString, isUuid } from './utils';
-import { authorizeUser } from './validateAuthToken';
+import { isNonEmptyString, isUuid } from './utils/validationUtils';
+import { authorizeUser } from './utils/authorizeUser';
 import {
   createArticle,
   getFullArticle,

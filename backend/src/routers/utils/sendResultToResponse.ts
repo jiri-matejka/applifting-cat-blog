@@ -1,15 +1,6 @@
 import { Result, isError, isOk } from '@src/domain/result';
-import { validate } from 'uuid';
 import { Response } from 'express';
 import { STATUS_CODES, statusCodeType } from '@src/utils/httpStatusCodes';
-
-export function isNonEmptyString(value: unknown): boolean {
-  return typeof value === 'string' && value.length > 0;
-}
-
-export function isUuid(value: unknown): boolean {
-  return typeof value === 'string' && validate(value);
-}
 
 export function sendResultToResponse<T extends { code?: statusCodeType }>(
   result: Result<T>,

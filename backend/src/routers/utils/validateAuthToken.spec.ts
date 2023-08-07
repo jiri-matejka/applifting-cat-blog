@@ -1,4 +1,4 @@
-import { generateAccessToken } from '../utils/passwordUtils';
+import { generateAccessToken } from '@src/utils/passwordUtils';
 // eslint-disable-next-line node/no-extraneous-import
 import { expect, test } from '@jest/globals';
 import { validateAuthToken } from './validateAuthToken';

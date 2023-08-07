@@ -2,7 +2,7 @@ import { generateAccessToken } from '@src/utils/passwordUtils';
 import { CookieOptions, Router } from 'express';
 import jetValidator from 'jet-validator';
 import { sign } from 'jsonwebtoken';
-import { isNonEmptyString } from './utils';
+import { isNonEmptyString } from './utils/validationUtils';
 import { authenticateUser } from '@src/domain/users';
 import { getEnvVariables } from '@src/envVariables';
 import {
