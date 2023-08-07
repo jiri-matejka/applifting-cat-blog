@@ -8,10 +8,10 @@ import cors from 'cors';
 
 import 'express-async-errors';
 import { initializeDataSource } from './database/dataSource';
-import { createArticlesRouter } from './routers/articles';
+import { createArticlesRouter } from './routers/articlesRouter';
 import { seedUsers } from './database/seedUsers';
-import { createAuthRouter } from './routers/auth';
-import { createCommentsRouter } from './routers/commentRouter';
+import { createAuthRouter } from './routers/authRouter';
+import { createCommentsRouter } from './routers/commentsRouter';
 
 import { Server } from 'ws';
 import { commentCallbacks } from './database/commentSubscriber';
