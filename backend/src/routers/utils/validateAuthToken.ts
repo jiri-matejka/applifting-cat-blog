@@ -1,5 +1,5 @@
 import { verify } from 'jsonwebtoken';
-import { Result, error, ok } from '@src/domain/result';
+import { Result, error, ok } from '@src/utils/result';
 import { STATUS_CODES } from '@src/utils/httpStatusCodes';
 
 export async function validateAuthToken(

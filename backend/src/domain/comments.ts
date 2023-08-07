@@ -1,5 +1,5 @@
 import { dbDataSource } from '@src/database/dataSource';
-import { Result, error, isError, isOk, ok } from './result';
+import { Result, error, isError, isOk, ok } from '../utils/result';
 import { getUser } from './users';
 import { getArticle as getArticle } from './articles';
 import { STATUS_CODES, statusCodeType } from '@src/utils/httpStatusCodes';

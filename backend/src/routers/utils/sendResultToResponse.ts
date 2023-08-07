@@ -1,4 +1,4 @@
-import { Result, isError, isOk } from '@src/domain/result';
+import { Result, isError, isOk } from '@src/utils/result';
 import { Response } from 'express';
 import { STATUS_CODES, statusCodeType } from '@src/utils/httpStatusCodes';
 

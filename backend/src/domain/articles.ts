@@ -1,7 +1,7 @@
 import { dbDataSource } from '@src/database/dataSource';
 import { Article } from '@src/entities/article';
 import { User } from '@src/entities/user';
-import { Result, error, ok } from './result';
+import { Result, error, ok } from '../utils/result';
 import { STATUS_CODES } from '../utils/httpStatusCodes';
 
 export type ArticleForCreation = Pick<

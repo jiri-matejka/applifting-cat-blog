@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { getEnvVariables } from '@src/envVariables';
-import { isError, isOk } from '@src/domain/result';
+import { isError, isOk } from '@src/utils/result';
 import { validateAuthToken } from './validateAuthToken';
 
 export async function authorizeUser(

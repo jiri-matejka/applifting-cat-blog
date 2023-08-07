@@ -2,7 +2,7 @@ import { generateAccessToken } from '@src/utils/passwordUtils';
 // eslint-disable-next-line node/no-extraneous-import
 import { expect, test } from '@jest/globals';
 import { validateAuthToken } from './validateAuthToken';
-import { isError, isOk } from '@src/domain/result';
+import { isError, isOk } from '@src/utils/result';
 
 test('should accept signed token', async () => {
   const tokenSecret = 'token-secret';

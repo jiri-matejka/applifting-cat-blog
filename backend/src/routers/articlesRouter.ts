@@ -8,7 +8,7 @@ import {
   getArticlesWithoutComments,
   patchArticle,
 } from '@src/domain/articles';
-import { isError, isOk } from '@src/domain/result';
+import { isError, isOk } from '@src/utils/result';
 import { STATUS_CODES } from '@src/utils/httpStatusCodes';
 
 export function createArticlesRouter() {
