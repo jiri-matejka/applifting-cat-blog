@@ -1,5 +1,5 @@
 import { Box, Heading } from '@chakra-ui/react';
-import { type Comment as CommentType } from '../types/article';
+import { type Comment as CommentType } from '@/types/comment';
 import { JoinDiscussion } from './JoinDiscussion';
 import { Comment } from './Comment';
 import {

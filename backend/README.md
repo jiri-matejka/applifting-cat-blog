@@ -8,7 +8,7 @@ Start the containers with
 And stop them with
 `docker compose --env-file ./env/production.env down`
 
-OpenAPI documentation: [api.yml](api.yml).
+OpenAPI documentation: [api.yml](api.yml), I did not include Swagger UI.
 
 ## Available scripts
 

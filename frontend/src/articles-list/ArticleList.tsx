@@ -1,4 +1,4 @@
-import { Heading, VStack } from '@chakra-ui/react';
+import { Heading, VStack, Text } from '@chakra-ui/react';
 import { ArticleListItem } from './ArticleListItem';
 import type { Article } from '@/types/article';
 import { useFetchData } from '../api/useFetchData';
@@ -21,11 +21,13 @@ export function ArticleList() {
         errorText="There was an error loading articles."
       >
         <VStack spacing={4} alignItems="start" pt="4">
-          {data?.length === 0
-            ? 'No articles written yet'
-            : data?.map((article) => (
-                <ArticleListItem key={article.id} {...article} />
-              ))}
+          {data?.length === 0 ? (
+            <Text>No articles written yet</Text>
+          ) : (
+            data?.map((article) => (
+              <ArticleListItem key={article.id} {...article} />
+            ))
+          )}
         </VStack>
       </ApiFetchedContent>
     </>

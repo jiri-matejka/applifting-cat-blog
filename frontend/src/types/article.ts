@@ -1,11 +1,4 @@
-export type Comment = {
-  articleId: string;
-  author: string;
-  text: string;
-  id: string;
-  postedAt: Date;
-  votes: number;
-};
+import { type Comment } from './comment';
 
 export type Article = {
   id: string;
